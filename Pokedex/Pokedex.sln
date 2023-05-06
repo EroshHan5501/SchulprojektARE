@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiCaller", "ApiCaller\ApiCaller.csproj", "{8AA5F53B-6592-4A02-B726-09891D03206C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9049FCA2-4D23-49E7-91FB-287FFD8E6D28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8AA5F53B-6592-4A02-B726-09891D03206C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA5F53B-6592-4A02-B726-09891D03206C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AA5F53B-6592-4A02-B726-09891D03206C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9049FCA2-4D23-49E7-91FB-287FFD8E6D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9049FCA2-4D23-49E7-91FB-287FFD8E6D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9049FCA2-4D23-49E7-91FB-287FFD8E6D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9049FCA2-4D23-49E7-91FB-287FFD8E6D28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
