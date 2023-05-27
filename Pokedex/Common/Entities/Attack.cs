@@ -5,7 +5,6 @@ namespace Pokedex.Common;
 
 public class Attack : IDatabaseMapable
 {
-
     public int AttackId { get; set; }
 
     public string Name { get; set; }
@@ -16,11 +15,14 @@ public class Attack : IDatabaseMapable
 
     public string DatabaseName => "attack";
 
-    public string InsertCommand => $"INSERT INTO {DatabaseName}(name, url) VALUES ('{Name}', '{Url}')";
+    public string InsertCommand => 
+        $"INSERT INTO {DatabaseName}(name, url) VALUES ('{Name}', '{Url}')";
 
-    public string UpdateCommand => $"UPDATE {DatabaseName} SET name='{Name}', url='{Url}' WHERE attackId={AttackId}";
+    public string UpdateCommand => 
+        $"UPDATE {DatabaseName} SET name='{Name}', url='{Url}' WHERE attackId={AttackId}";
 
-    public string DeleteCommand => $"DELETE FROM {DatabaseName} WHERE attackId={AttackId}";
+    public string DeleteCommand => 
+        $"DELETE FROM {DatabaseName} WHERE attackId={AttackId}";
 
     public Attack()
     {

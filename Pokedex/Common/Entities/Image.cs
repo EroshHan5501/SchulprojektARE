@@ -9,13 +9,15 @@ public class Image : IDatabaseMapable
 
     public string Url { get; set; }
 
+    public int FPokemonId { get; set; }
+
     public string DatabaseName => "image";
 
-    public string InsertCommand => throw new NotImplementedException();
+    public string InsertCommand => $"INSERT INTO {DatabaseName}(url, fpokemonId) VALUES('{Url}', {FPokemonId})";
 
-    public string UpdateCommand => throw new NotImplementedException();
+    public string UpdateCommand => $"UPDATE {DatabaseName} SET imageId={ImageId}, url='{Url}', fpokemonId={FPokemonId} WHERE imageId={ImageId}";
 
-    public string DeleteCommand => throw new NotImplementedException();
+    public string DeleteCommand => $"DELETE FROM {DatabaseName} WHERE imageId={ImageId}";
 
     public void GetFrom(MySqlDataReader reader)
     {
