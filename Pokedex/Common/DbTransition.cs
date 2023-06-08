@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MySqlConnector;
 
 namespace Pokedex.Common;
@@ -5,7 +6,7 @@ namespace Pokedex.Common;
 public class DbTransition : IDisposable {
     private static string ConnectionString => "server=localhost;uid=poketrainer;password=password123;database=pokedex";
 
-    private MySqlConnection DbConnection { get; init; }
+    private MySqlConnection DbConnection { get; set; }
 
     public DbTransition()
     {
@@ -14,17 +15,23 @@ public class DbTransition : IDisposable {
         DbConnection.Open();
     }
     
-    public IEnumerable<T> GetFromDatabase<T>(string query) 
+    public IEnumerable<T> GetFromDatabase<T>(string query, QueryOptions options) 
         where T : IDatabaseMapable, new()
     {
-        using MySqlCommand command = new MySqlCommand(query, DbConnection);
+        MySqlDataReader reader = ExecuteCommand(query);
 
-        using MySqlDataReader reader = command.ExecuteReader();
+        IEnumerable<T> entities = MapInternal<T>(reader, options);
 
-        return MapInternal<T>(reader);
+        return entities;
     }
 
-    private IEnumerable<T> MapInternal<T>(MySqlDataReader reader) 
+    private MySqlDataReader ExecuteCommand(string query) {
+        using MySqlCommand command = new MySqlCommand(query, DbConnection);
+
+        return command.ExecuteReader();
+    }
+
+    private IEnumerable<T> MapInternal<T>(MySqlDataReader reader, QueryOptions options) 
         where T : IDatabaseMapable, new()
     {
         List<T> entities = new List<T>();
@@ -37,6 +44,19 @@ public class DbTransition : IDisposable {
 
             entities.Add(entity);
         }
+
+        foreach (T entity in entities) {
+            
+            DbConnection.Close();
+
+            if (entity is IDatabaseRelatable && options.IncludeRelations) {
+                IDatabaseRelatable relatable = (IDatabaseRelatable)entity;
+
+                relatable.GetRelatedEntities(ConnectionString);
+            }
+        }
+
+        DbConnection.Open();
 
         return entities;
     }

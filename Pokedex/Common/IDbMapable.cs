@@ -17,3 +17,8 @@ public interface IDatabaseMapable {
     public void GetFrom(MySqlDataReader reader);
 
 }
+
+public interface IDatabaseRelatable : IDatabaseMapable {
+
+    public void GetRelatedEntities(string connectionString);
+}

@@ -3,7 +3,7 @@ using MySqlConnector;
 
 namespace Pokedex.Common;
 
-public class Attack : IDatabaseMapable
+public class Attack : IDatabaseRelatable
 {
     public int AttackId { get; set; }
 
@@ -34,5 +34,24 @@ public class Attack : IDatabaseMapable
         AttackId = reader.GetInt32(0);
         Name = reader.GetString(1);
         Url = reader.GetString(2);
+    }
+
+    public void GetRelatedEntities(string connectionString)
+    {
+        using MySqlConnection connection = new MySqlConnection(connectionString);
+
+        using MySqlCommand command = new MySqlCommand(
+            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}", 
+            connection);
+
+        using MySqlDataReader reader = command.ExecuteReader();
+
+        while(reader.Read()) {
+            Pokemon pokemon = new Pokemon();
+
+            pokemon.GetFrom(reader);
+
+            Pokemons.Add(pokemon);
+        }
     }
 }
