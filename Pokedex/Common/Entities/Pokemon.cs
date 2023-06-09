@@ -47,41 +47,20 @@ public class Pokemon : IDatabaseRelatable
 
     public void GetRelatedEntities(string connectionString)
     {
-        using MySqlConnection connection = new MySqlConnection(connectionString);
+        using DbTransition trans1 = new DbTransition();
 
-        connection.Open();
-
-        using MySqlCommand command = new MySqlCommand(
+        IEnumerable<Attack> result1 = trans1.GetFromDatabase<Attack>(
             $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={PokemonId}", 
-            connection);
+            new QueryOptions() { IncludeRelations = false});
 
-        MySqlDataReader reader = command.ExecuteReader();
-        
-        while(reader.Read()) {
-            Attack attack = new Attack();
+        Attacks = result1.ToList();
 
-            attack.GetFrom(reader);
 
-            Attacks.Add(attack);
-        }
+        using DbTransition trans2 = new DbTransition();
 
-        connection.Close();
+        IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={PokemonId}", 
+        new QueryOptions() { IncludeRelations = false});
 
-        using MySqlConnection connection2 = new MySqlConnection(connectionString);
-
-        connection2.Open();
-
-        using MySqlCommand command2 = new MySqlCommand(
-            $"SELECT imageId, url FROM image WHERE fpokemonId={PokemonId}", 
-            connection2);
-
-        MySqlDataReader reader2 = command2.ExecuteReader();
-
-        while(reader2.Read()) {
-            Image image = new Image();
-            image.GetFrom(reader2);
-
-            Images.Add(image);
-        }
+        Images = result2.ToList();
     }
 }

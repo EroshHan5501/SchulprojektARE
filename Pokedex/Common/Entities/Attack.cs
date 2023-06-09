@@ -38,20 +38,12 @@ public class Attack : IDatabaseRelatable
 
     public void GetRelatedEntities(string connectionString)
     {
-        using MySqlConnection connection = new MySqlConnection(connectionString);
+        using DbTransition trans = new DbTransition();
 
-        using MySqlCommand command = new MySqlCommand(
-            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}", 
-            connection);
+        IEnumerable<Pokemon> pokemons = trans.GetFromDatabase<Pokemon>(
+            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}",
+            new QueryOptions() { IncludeRelations = false}); 
 
-        using MySqlDataReader reader = command.ExecuteReader();
-
-        while(reader.Read()) {
-            Pokemon pokemon = new Pokemon();
-
-            pokemon.GetFrom(reader);
-
-            Pokemons.Add(pokemon);
-        }
+        Pokemons = pokemons.ToList();
     }
 }
