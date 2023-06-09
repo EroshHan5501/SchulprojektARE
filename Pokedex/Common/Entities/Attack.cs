@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using MySqlConnector;
 
 namespace Pokedex.Common;
@@ -13,14 +14,18 @@ public class Attack : IDatabaseRelatable
     
     List<Pokemon> Pokemons { get; set; }
 
+    [JsonIgnore]
     public string DatabaseName => "attack";
 
+    [JsonIgnore]
     public string InsertCommand => 
         $"INSERT INTO {DatabaseName}(name, url) VALUES ('{Name}', '{Url}')";
 
+    [JsonIgnore]
     public string UpdateCommand => 
         $"UPDATE {DatabaseName} SET name='{Name}', url='{Url}' WHERE attackId={AttackId}";
 
+    [JsonIgnore]
     public string DeleteCommand => 
         $"DELETE FROM {DatabaseName} WHERE attackId={AttackId}";
 

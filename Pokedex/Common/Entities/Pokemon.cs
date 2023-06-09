@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using MySqlConnector;
 
 namespace Pokedex.Common;
@@ -20,14 +21,18 @@ public class Pokemon : IDatabaseRelatable
 
     public List<Image> Images { get; set; }
 
+    [JsonIgnore]
     public string DatabaseName => "pokemon";
 
+    [JsonIgnore]
     public string InsertCommand => 
         $"INSERT INTO {DatabaseName}(pokemonId, name, height, isDefault, baseExperience) VALUES({PokemonId}, '{Name}', {Height}, {IsDefault}, {BaseExperience});";
 
+    [JsonIgnore]
     public string UpdateCommand => 
         $"UPDATE {DatabaseName} SET pokemonId={PokemonId}, name='{Name}', height={Height}, isDefault={IsDefault}, baseExperience={BaseExperience} WHERE pokemonId={PokemonId};";
 
+    [JsonIgnore]
     public string DeleteCommand => $"DELETE FROM {DatabaseName} WHERE pokemonId={PokemonId};";
 
     public Pokemon()
