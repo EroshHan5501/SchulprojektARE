@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ApiCaller": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Project",
+      "commandLineArgs": "pokemon"
+    }
+  }
+}
