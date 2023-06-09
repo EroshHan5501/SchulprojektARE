@@ -5,13 +5,11 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCaller", "ApiCaller\ApiCaller.csproj", "{8AA5F53B-6592-4A02-B726-09891D03206C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{21DB7FD5-C1D6-432D-A87C-38285C063C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{21DB7FD5-C1D6-432D-A87C-38285C063C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{7DD1FFB2-4028-43C3-A9F5-1B5CB40AA163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{7DD1FFB2-4028-43C3-A9F5-1B5CB40AA163}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbTesting", "DbTesting\DbTesting.csproj", "{759BA67C-F3D3-4D88-8B77-C86ECF744BC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9049FCA2-4D23-49E7-91FB-287FFD8E6D28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
