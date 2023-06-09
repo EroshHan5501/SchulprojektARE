@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using MySqlConnector;
+using Pokedex.Common;
+using System.Text.Json;
 
 namespace ApiCaller
 {
@@ -29,6 +31,8 @@ namespace ApiCaller
             //Actual:
             Results pokemonList = JsonSerializer.Deserialize<Results>(responseBody);
 
+            int i = 1;
+            using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
             Console.WriteLine("***** ***** *****");
             if (pokemonList!= null && pokemonList.results!= null)
             {
@@ -50,6 +54,16 @@ namespace ApiCaller
                     }
                     Console.WriteLine("__");
                     //Results pokemonList = JsonSerializer.Deserialize<Results>(responseBody);
+
+                    Pokedex.Common.Pokemon popo = new();
+                    popo.PokemonId = i;
+                    popo.Name = pokemon.name;
+                    popo.Height = 20;
+                    popo.IsDefault = false;
+                    popo.BaseExperience = 0;
+                    i++;
+                    
+                    transition.Insert(popo);
                 }
             }
             Console.WriteLine("***** ***** *****");
