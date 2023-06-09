@@ -14,19 +14,35 @@ public sealed class PokemonController : ControllerBase {
 
     } 
 
-    [HttpGet("overview/")]
+    [HttpGet]
     public IActionResult GetOverview() {
         
         using DbTransition transition = new DbTransition();
 
-        IEnumerable<Pokemon> pokemons = transition.GetFromDatabase<Pokemon>("SELECT * FROM pokemon", new QueryOptions() { IncludeRelations = true});
+        IEnumerable<Pokemon> pokemons = transition
+            .GetFromDatabase<Pokemon>(
+                "SELECT * FROM pokemon", 
+                new QueryOptions() { IncludeRelations = true});
 
         return Ok(pokemons);
     }
 
-    [HttpGet]
+    [HttpGet("detail/")]
     public IActionResult Get([FromQuery]int pokemonId) {
 
-        return Ok("Hello world");
+        using DbTransition transition = new DbTransition();
+
+        string query = $"SELECT * FROM pokemon WHERE pokemonId={pokemonId}";
+
+        Pokemon? pokemon = transition
+            .GetFromDatabase<Pokemon>(
+                query, 
+                new QueryOptions() { IncludeRelations = true})
+            .SingleOrDefault();
+
+        if (pokemon is null) 
+            return NotFound($"No pokemon with the id {pokemonId}");
+
+        return Ok(pokemon);
     }
 }
