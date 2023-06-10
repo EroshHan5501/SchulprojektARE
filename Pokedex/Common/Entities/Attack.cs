@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using MySqlConnector;
 
 namespace Pokedex.Common;
@@ -13,14 +14,18 @@ public class Attack : IDatabaseRelatable
     
     List<Pokemon> Pokemons { get; set; }
 
+    [JsonIgnore]
     public string DatabaseName => "attack";
 
+    [JsonIgnore]
     public string InsertCommand => 
         $"INSERT INTO {DatabaseName}(name, url) VALUES ('{Name}', '{Url}')";
 
+    [JsonIgnore]
     public string UpdateCommand => 
         $"UPDATE {DatabaseName} SET name='{Name}', url='{Url}' WHERE attackId={AttackId}";
 
+    [JsonIgnore]
     public string DeleteCommand => 
         $"DELETE FROM {DatabaseName} WHERE attackId={AttackId}";
 
@@ -38,20 +43,12 @@ public class Attack : IDatabaseRelatable
 
     public void GetRelatedEntities(string connectionString)
     {
-        using MySqlConnection connection = new MySqlConnection(connectionString);
+        using DbTransition trans = new DbTransition();
 
-        using MySqlCommand command = new MySqlCommand(
-            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}", 
-            connection);
+        IEnumerable<Pokemon> pokemons = trans.GetFromDatabase<Pokemon>(
+            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}",
+            new QueryOptions() { IncludeRelations = false}); 
 
-        using MySqlDataReader reader = command.ExecuteReader();
-
-        while(reader.Read()) {
-            Pokemon pokemon = new Pokemon();
-
-            pokemon.GetFrom(reader);
-
-            Pokemons.Add(pokemon);
-        }
+        Pokemons = pokemons.ToList();
     }
 }
