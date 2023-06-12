@@ -47,6 +47,7 @@ namespace ApiCaller
                     //Console.WriteLine(responseBodyMoves);
                     //Console.WriteLine(pokemon.url);
                     MoveList moveList = JsonSerializer.Deserialize<MoveList>(responseBodyMoves);
+                    Pokemon detailedPokemon = JsonSerializer.Deserialize<Pokemon>(responseBodyMoves);
                     pokemon.moves = moveList.moves;
                     foreach (MoveStats mS in pokemon.moves)
                     {
@@ -55,6 +56,14 @@ namespace ApiCaller
                     Console.WriteLine("__");
                     //Results pokemonList = JsonSerializer.Deserialize<Results>(responseBody);
 
+                    Console.WriteLine("aaaaaaaaaaaaaaaaaaa");
+                    Console.WriteLine(detailedPokemon.name);
+                    Console.WriteLine(detailedPokemon.url);
+                    Console.WriteLine(detailedPokemon.id);
+                    Console.WriteLine(detailedPokemon.height);
+                    Console.WriteLine("aaaaaaaaaaaaaaaaaaa");
+
+                    /*
                     Pokedex.Common.Pokemon popo = new();
                     popo.PokemonId = i;
                     popo.Name = pokemon.name;
@@ -64,6 +73,7 @@ namespace ApiCaller
                     i++;
                     
                     transition.Insert(popo);
+                    */
                 }
             }
             Console.WriteLine("***** ***** *****");
@@ -78,6 +88,8 @@ namespace ApiCaller
         //Actual:
         public class Pokemon
         {
+            public int? id { get; set; }
+            public int? height { get; set; }
             public string? name { get; set; }
             public string? url { get; set; }
             public List<MoveStats>? moves { get; set; } 
