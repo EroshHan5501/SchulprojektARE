@@ -8,160 +8,159 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace Pokedex.Common;
+
+public class CommandBuilder
 {
-    internal class CommandBuilder
+    private enum CommandOption
     {
-        private enum CommandOption
+        Insert = 0,
+        Update = 1,
+        Delete = 2
+    };
+
+    public static string InsertCommand<T>(T entity) 
+    {
+        string tableName = GetTableName(typeof(T));
+
+        StringBuilder query = new StringBuilder();
+
+        query.Append($"INSERT INTO {tableName}(");
+
+        List<KeyValuePair<string, string>> properties = GetColumnProperties(typeof(T), entity).ToList();
+
+        bool first = true;
+        foreach (KeyValuePair<string, string> property in properties)
         {
-            Insert = 0,
-            Update = 1,
-            Delete = 2
-        };
-
-        public static string InsertCommand<T>(T entity) 
-        {
-            string tableName = GetTableName(typeof(T));
-
-            StringBuilder query = new StringBuilder();
-
-            query.Append($"INSERT INTO {tableName}(");
-
-            List<KeyValuePair<string, string>> properties = GetColumnProperties(typeof(T), entity).ToList();
-
-            bool first = true;
-            foreach (KeyValuePair<string, string> property in properties)
+            if (first)
             {
-                if (first)
-                {
-                    query.Append($"{property.Key}");
-                    first = false;
-                }
-                else
-                {
-                    query.Append($", {property.Key}");
-                }
+                query.Append($"{property.Key}");
+                first = false;
             }
-
-            query.Append(") VALUES(");
-
-            first = true;
-            foreach (KeyValuePair<string, string> property in properties)
+            else
             {
-                if (first)
-                {
-                    query.Append($"{property.Value}");
-                    first = false;
-                }
-                else
-                {
-                    query.Append($", {property.Value}");
-                }
+                query.Append($", {property.Key}");
             }
-
-            query.Append(';');
-
-            return query.ToString();
         }
 
-        public static string UpdateCommand<T>(T entity)
+        query.Append(") VALUES(");
+
+        first = true;
+        foreach (KeyValuePair<string, string> property in properties)
         {
-            string tableName = GetTableName(typeof(T));
-
-            StringBuilder query = new StringBuilder();
-
-            query.Append($"UPDATE {tableName} SET");
-
-            bool first = true;
-            // iterate over every column property
-            foreach (KeyValuePair<string, string> property in GetColumnProperties(typeof(T), entity))
+            if (first)
             {
-                if (first)
-                {
-                    query.Append($" {property.Key}={property.Value}");
-                    first = false;
-                }
-                else 
-                {
-                    query.Append($", {property.Key}={property.Value}");
-
-                }
+                query.Append($"{property.Value}");
+                first = false;
             }
-
-            (string name, int value) = GetKeyProperty<T>(typeof(T), entity);
-
-            query.Append($" WHERE {name}={value};");
-
-            return query.ToString();
-        }
-
-        public static string DeleteCommand<T>(T entity)
-        {
-            string tableName = GetTableName(typeof(T));
-
-            StringBuilder query = new StringBuilder();
-
-            (string name, int value) = GetKeyProperty<T>(typeof(T), entity);
-
-            query.Append($"DELETE FROM {tableName} WHERE {name}={value};");
-
-            return query.ToString();
-        }
-
-        private static string GetTableName(Type type)
-        { 
-            TableAttribute? tableAttr = (TableAttribute?)type.GetCustomAttribute(typeof(TableAttribute));
-
-            if (tableAttr is null)
+            else
             {
-                throw new Exception("Entity is not suitable for database mapping");
+                query.Append($", {property.Value}");
             }
-
-            return tableAttr.Name;
         }
 
-        private static KeyValuePair<string, int> GetKeyProperty<T>(Type type, T entity)
+        query.Append(");");
+
+        return query.ToString();
+    }
+
+    public static string UpdateCommand<T>(T entity)
+    {
+        string tableName = GetTableName(typeof(T));
+
+        StringBuilder query = new StringBuilder();
+
+        query.Append($"UPDATE {tableName} SET");
+
+        bool first = true;
+        // iterate over every column property
+        foreach (KeyValuePair<string, string> property in GetColumnProperties(typeof(T), entity))
         {
-            IEnumerable<PropertyInfo> keyProperties = type
-                .GetProperties()
-                .Where(prop => prop.IsDefined(typeof(KeyAttribute), false));
+            if (first)
+            {
+                query.Append($" {property.Key}={property.Value}");
+                first = false;
+            }
+            else 
+            {
+                query.Append($", {property.Key}={property.Value}");
+
+            }
+        }
+
+        (string name, int value) = GetKeyProperty<T>(typeof(T), entity);
+
+        query.Append($" WHERE {name}={value};");
+
+        return query.ToString();
+    }
+
+    public static string DeleteCommand<T>(T entity)
+    {
+        string tableName = GetTableName(typeof(T));
+
+        StringBuilder query = new StringBuilder();
+
+        (string name, int value) = GetKeyProperty<T>(typeof(T), entity);
+
+        query.Append($"DELETE FROM {tableName} WHERE {name}={value};");
+
+        return query.ToString();
+    }
+
+    private static string GetTableName(Type type)
+    { 
+        TableAttribute? tableAttr = (TableAttribute?)type.GetCustomAttribute(typeof(TableAttribute));
+
+        if (tableAttr is null)
+        {
+            throw new Exception("Entity is not suitable for database mapping");
+        }
+
+        return tableAttr.Name;
+    }
+
+    private static KeyValuePair<string, int> GetKeyProperty<T>(Type type, T entity)
+    {
+        IEnumerable<PropertyInfo> keyProperties = type
+            .GetProperties()
+            .Where(prop => prop.IsDefined(typeof(KeyAttribute), false));
+    
+        if (keyProperties.Count() != 1)
+        {
+            throw new Exception("Key attribute has to be applied only once!");
+        }
         
-            if (keyProperties.Count() != 1)
-            {
-                throw new Exception("Key attribute has to be applied only once!");
-            }
-            
-            PropertyInfo keyProperty = keyProperties.First();
+        PropertyInfo keyProperty = keyProperties.First();
 
-            string name = keyProperty.Name;
-            int? value = (int?)keyProperty.GetValue(entity);
+        string name = keyProperty.Name;
+        int? value = (int?)keyProperty.GetValue(entity);
 
-            if (value == null)
-            {
-                throw new Exception("Value of key can't be null");
-            }
-            
-            return new KeyValuePair<string, int>(name, (int)value);
-        }
-
-        private static IEnumerable<KeyValuePair<string, string>> GetColumnProperties<T>(Type type, T entity)
+        if (value == null)
         {
-            IEnumerable<PropertyInfo> columnProperties = type
-                .GetProperties()
-                .Where(prop => prop.IsDefined(typeof(ColumnAttribute), false)); 
+            throw new Exception("Value of key can't be null");
+        }
+        
+        return new KeyValuePair<string, int>(name, (int)value);
+    }
 
-            foreach (PropertyInfo property in columnProperties)
+    private static IEnumerable<KeyValuePair<string, string>> GetColumnProperties<T>(Type type, T entity)
+    {
+        IEnumerable<PropertyInfo> columnProperties = type
+            .GetProperties()
+            .Where(prop => prop.IsDefined(typeof(ColumnAttribute), false)); 
+
+        foreach (PropertyInfo property in columnProperties)
+        {
+            string name = property.Name;
+            string? value = property.GetValue(entity).ToString();
+
+            if (property.PropertyType == typeof(string))
             {
-                string name = property.Name;
-                string? value = property.GetValue(entity).ToString();
-
-                if (property.PropertyType == typeof(string))
-                {
-                    value = $"'{value}'";
-                }
-
-                yield return new KeyValuePair<string, string> (name, value);
+                value = $"'{value}'";
             }
+
+            yield return new KeyValuePair<string, string> (name, value);
         }
     }
 }

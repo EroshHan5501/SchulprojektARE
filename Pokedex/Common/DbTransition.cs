@@ -1,5 +1,5 @@
 using System.Data;
-using Common;
+using Pokedex.Common;
 using MySqlConnector;
 
 namespace Pokedex.Common;
