@@ -1,7 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using MySqlConnector;
 
 namespace Pokedex.Common;
@@ -19,7 +18,7 @@ public class Attack : IDatabaseRelatable
     [Column("url")]
     public string Url { get; set; }
     
-    List<Pokemon> Pokemons { get; set; }
+    public List<Pokemon> Pokemons { get; set; }
 
     public Attack()
     {
