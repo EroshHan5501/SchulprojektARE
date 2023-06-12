@@ -1,3 +1,4 @@
+using System.Data;
 using System.Diagnostics;
 using MySqlConnector;
 
@@ -11,6 +12,10 @@ public class DbTransition : IDisposable {
     public DbTransition()
     {
         DbConnection = new MySqlConnection(ConnectionString);
+
+        if (DbConnection.State == ConnectionState.Open) {
+            DbConnection.Close();
+        }
 
         DbConnection.Open();
     }
@@ -47,16 +52,12 @@ public class DbTransition : IDisposable {
 
         foreach (T entity in entities) {
             
-            DbConnection.Close();
-
             if (entity is IDatabaseRelatable && options.IncludeRelations) {
                 IDatabaseRelatable relatable = (IDatabaseRelatable)entity;
 
                 relatable.GetRelatedEntities(ConnectionString);
             }
         }
-
-        DbConnection.Open();
 
         return entities;
     }
