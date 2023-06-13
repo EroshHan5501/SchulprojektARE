@@ -1,28 +1,24 @@
 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MySqlConnector;
 
 namespace Pokedex.Common;
 
+[Table("attack")]
 public class Attack : IDatabaseRelatable
 {
+    [Key]
+    [Column("attackId")]
     public int AttackId { get; set; }
 
+    [Column("name")]
     public string Name { get; set; }
 
+    [Column("url")]
     public string Url { get; set; }
     
-    List<Pokemon> Pokemons { get; set; }
-
-    public string DatabaseName => "attack";
-
-    public string InsertCommand => 
-        $"INSERT INTO {DatabaseName}(name, url) VALUES ('{Name}', '{Url}')";
-
-    public string UpdateCommand => 
-        $"UPDATE {DatabaseName} SET name='{Name}', url='{Url}' WHERE attackId={AttackId}";
-
-    public string DeleteCommand => 
-        $"DELETE FROM {DatabaseName} WHERE attackId={AttackId}";
+    public List<Pokemon> Pokemons { get; set; }
 
     public Attack()
     {
@@ -38,20 +34,12 @@ public class Attack : IDatabaseRelatable
 
     public void GetRelatedEntities(string connectionString)
     {
-        using MySqlConnection connection = new MySqlConnection(connectionString);
+        using DbTransition trans = new DbTransition();
 
-        using MySqlCommand command = new MySqlCommand(
-            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}", 
-            connection);
+        IEnumerable<Pokemon> pokemons = trans.GetFromDatabase<Pokemon>(
+            $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}",
+            new QueryOptions() { IncludeRelations = false}); 
 
-        using MySqlDataReader reader = command.ExecuteReader();
-
-        while(reader.Read()) {
-            Pokemon pokemon = new Pokemon();
-
-            pokemon.GetFrom(reader);
-
-            Pokemons.Add(pokemon);
-        }
+        Pokemons = pokemons.ToList();
     }
 }
