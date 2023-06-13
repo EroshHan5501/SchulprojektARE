@@ -1,39 +1,34 @@
 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 using MySqlConnector;
 
 namespace Pokedex.Common;
 
+[Table("pokemon")]
 public class Pokemon : IDatabaseRelatable
-{   
+{
+    [Key]
+    [Column("pokemonId")]
     public int PokemonId { get; set; }
 
+    [Column("name")]
     public string Name { get; set; }
 
+    [Column("height")]
     public int Height { get; set; }
 
+    [Column("isDefault")]
     public bool IsDefault { get; set; }
 
+    [Column("baseExperience")]
     public int BaseExperience { get; set; }
 
     public List<Attack> Attacks { get; set; }
 
     public List<Image> Images { get; set; }
-
-    [JsonIgnore]
-    public string DatabaseName => "pokemon";
-
-    [JsonIgnore]
-    public string InsertCommand => 
-        $"INSERT INTO {DatabaseName}(pokemonId, name, height, isDefault, baseExperience) VALUES({PokemonId}, '{Name}', {Height}, {IsDefault}, {BaseExperience});";
-
-    [JsonIgnore]
-    public string UpdateCommand => 
-        $"UPDATE {DatabaseName} SET pokemonId={PokemonId}, name='{Name}', height={Height}, isDefault={IsDefault}, baseExperience={BaseExperience} WHERE pokemonId={PokemonId};";
-
-    [JsonIgnore]
-    public string DeleteCommand => $"DELETE FROM {DatabaseName} WHERE pokemonId={PokemonId};";
 
     public Pokemon()
     {
@@ -59,7 +54,6 @@ public class Pokemon : IDatabaseRelatable
             new QueryOptions() { IncludeRelations = false});
 
         Attacks = result1.ToList();
-
 
         using DbTransition trans2 = new DbTransition();
 

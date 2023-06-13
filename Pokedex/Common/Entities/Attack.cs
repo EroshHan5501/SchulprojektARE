@@ -1,33 +1,24 @@
 
-using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MySqlConnector;
 
 namespace Pokedex.Common;
 
+[Table("attack")]
 public class Attack : IDatabaseRelatable
 {
+    [Key]
+    [Column("attackId")]
     public int AttackId { get; set; }
 
+    [Column("name")]
     public string Name { get; set; }
 
+    [Column("url")]
     public string Url { get; set; }
     
-    List<Pokemon> Pokemons { get; set; }
-
-    [JsonIgnore]
-    public string DatabaseName => "attack";
-
-    [JsonIgnore]
-    public string InsertCommand => 
-        $"INSERT INTO {DatabaseName}(name, url) VALUES ('{Name}', '{Url}')";
-
-    [JsonIgnore]
-    public string UpdateCommand => 
-        $"UPDATE {DatabaseName} SET name='{Name}', url='{Url}' WHERE attackId={AttackId}";
-
-    [JsonIgnore]
-    public string DeleteCommand => 
-        $"DELETE FROM {DatabaseName} WHERE attackId={AttackId}";
+    public List<Pokemon> Pokemons { get; set; }
 
     public Attack()
     {

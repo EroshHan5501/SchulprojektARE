@@ -1,5 +1,5 @@
 using System.Data;
-using System.Diagnostics;
+using Pokedex.Common;
 using MySqlConnector;
 
 namespace Pokedex.Common;
@@ -65,7 +65,9 @@ public class DbTransition : IDisposable {
     public void Insert<T>(T entity) 
         where T : IDatabaseMapable 
     {
-        MySqlCommand command = new MySqlCommand(entity.InsertCommand, DbConnection);
+        string query = CommandBuilder.InsertCommand(entity);
+
+        MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();
     }
@@ -81,7 +83,9 @@ public class DbTransition : IDisposable {
     public void Update<T>(T entity) 
         where T : IDatabaseMapable
     {
-        MySqlCommand command = new MySqlCommand(entity.UpdateCommand, DbConnection);
+        string query = CommandBuilder.UpdateCommand(entity);
+
+        MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();
     }
@@ -97,7 +101,9 @@ public class DbTransition : IDisposable {
     public void Delete<T>(T entity) 
         where T : IDatabaseMapable
     {
-        MySqlCommand command = new MySqlCommand(entity.DeleteCommand, DbConnection);
+        string query = CommandBuilder.DeleteCommand(entity);
+
+        MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();
     }
