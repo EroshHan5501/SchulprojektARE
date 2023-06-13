@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 using MySqlConnector;
+using Pokedx.Common;
 
 namespace Pokedex.Common;
 
@@ -26,8 +27,10 @@ public class Pokemon : IDatabaseRelatable
     [Column("baseExperience")]
     public int BaseExperience { get; set; }
 
+    [Relation("pokeAttack", RelationType.ManyToMany)]
     public List<Attack> Attacks { get; set; }
 
+    [Relation("image", RelationType.OneToMany)]
     public List<Image> Images { get; set; }
 
     public Pokemon()

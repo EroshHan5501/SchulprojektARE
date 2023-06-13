@@ -1,6 +1,8 @@
 using System.Data;
 using Pokedex.Common;
 using MySqlConnector;
+using System.Reflection;
+using Pokedx.Common;
 
 namespace Pokedex.Common;
 
@@ -70,7 +72,30 @@ public class DbTransition : IDisposable {
         MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();
+
+        IEnumerable<PropertyInfo> relationProperties = GetRelationProperties(typeof(T));
+
+        List<Type> types = new List<Type>();
+        foreach (PropertyInfo property in relationProperties)
+        {
+            
+
+           property.GetMethod.Invoke(entity);
+        }
+
+
+        // Here we need to create the relation ships
+       
+        // First we get properties with the relation attribute 
+
+        // Then we check which relation type is used 
+
+        // If it is a many to many relationship we 
     }
+
+    private static IEnumerable<PropertyInfo> GetRelationProperties(Type type) =>
+        type.GetProperties()
+            .Where(prop => prop.IsDefined(typeof(RelationAttribute)));
 
     public void Insert<T>(IEnumerable<T> entities) 
         where T : IDatabaseMapable 
