@@ -61,19 +61,19 @@ namespace ApiCaller
                     Console.WriteLine(detailedPokemon.url);
                     Console.WriteLine(detailedPokemon.id);
                     Console.WriteLine(detailedPokemon.height);
+                    Console.WriteLine(detailedPokemon.base_experience);
+                    Console.WriteLine(detailedPokemon.sprites.front_default);
                     Console.WriteLine("aaaaaaaaaaaaaaaaaaa");
 
-                    /*
                     Pokedex.Common.Pokemon popo = new();
-                    popo.PokemonId = i;
+                    popo.PokemonId = detailedPokemon.id;
                     popo.Name = pokemon.name;
-                    popo.Height = 20;
-                    popo.IsDefault = false;
-                    popo.BaseExperience = 0;
+                    popo.Height = detailedPokemon.height;
+                    popo.IsDefault = detailedPokemon.IsDefault;
+                    popo.BaseExperience = detailedPokemon.base_experience;
                     i++;
                     
-                    transition.Insert(popo);
-                    */
+                    //transition.Insert(popo);
                 }
             }
             Console.WriteLine("***** ***** *****");
@@ -88,16 +88,20 @@ namespace ApiCaller
         //Actual:
         public class Pokemon
         {
-            public int? id { get; set; }
-            public int? height { get; set; }
+            public int id { get; set; }
+            public int height { get; set; }
             public string? name { get; set; }
             public string? url { get; set; }
-            public List<MoveStats>? moves { get; set; } 
+            public bool IsDefault { get; set; }
+            public int base_experience { get; set; }
+            public List<MoveStats>? moves { get; set; }
+            public Sprites sprites { get; set; }
         }
         public class Results
         {
             public List<Pokemon>? results { get; set; }
         }
+        //Moves
         public class Move
         {
             public string? name { get; set; }
@@ -112,5 +116,15 @@ namespace ApiCaller
         {
             public List<MoveStats>? moves { get; set; }
         }
+
+        //Images
+        public class Sprites
+        {
+            public string front_default { get; set; }
+        }
+        //public class Sprites
+        //{
+        //    public List<Image> sprites { get; set; }
+        //}
     }
 }
