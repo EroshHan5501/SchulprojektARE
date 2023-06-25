@@ -92,6 +92,8 @@ public class DbTransition : IDisposable {
 
     public void Update<T>(T entity) 
     {
+        ResetConnection();
+
         string query = CommandBuilder.UpdateCommand(entity);
 
         MySqlCommand command = new MySqlCommand(query, DbConnection);
@@ -108,6 +110,8 @@ public class DbTransition : IDisposable {
 
     public void Delete<T>(T entity) 
     {
+        ResetConnection();
+        
         string query = CommandBuilder.DeleteCommand(entity);
 
         MySqlCommand command = new MySqlCommand(query, DbConnection);
