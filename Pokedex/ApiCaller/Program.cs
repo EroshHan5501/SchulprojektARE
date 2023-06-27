@@ -29,18 +29,34 @@ namespace ApiCaller
             Console.WriteLine(seite.version);
 
             //Actual:
-            Results pokemonList = JsonSerializer.Deserialize<Results>(responseBody);
+            PokeList pokemonList = JsonSerializer.Deserialize<PokeList>(responseBody);
 
             int i = 1;
             using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
             Console.WriteLine("***** ***** *****");
             if (pokemonList!= null && pokemonList.results!= null)
             {
-                foreach(Pokemon pokemon in pokemonList.results) 
+                foreach(ProtoPokemon pokemon in pokemonList.results) 
                 {
                     Console.WriteLine(pokemon.name);
                     Console.WriteLine(pokemon.url);
 
+                    HttpClient newClient = new HttpClient();
+                    using HttpResponseMessage newResponse = newClient.GetAsync(pokemon.url).Result;
+                    string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
+                    Pokemon newPokemon = JsonSerializer.Deserialize<Pokemon>(newResponseBody);
+                    Console.WriteLine();
+                    Console.WriteLine("***** ***** *****");
+                    Console.WriteLine(newPokemon.name);
+                    Console.WriteLine(newPokemon.url);
+                    Console.WriteLine(newPokemon.height);
+                    Console.WriteLine(newPokemon.base_experience);
+                    Console.WriteLine(newPokemon.types[0].type.name);
+                    Console.WriteLine(newPokemon.sprites.front_default);
+                    Console.WriteLine("***** ***** *****");
+                    Console.WriteLine();
+
+                    /*
                     HttpClient clientMoves = new HttpClient();
                     using HttpResponseMessage responseMoves = client.GetAsync($"{pokemon.url}").Result;
                     string responseBodyMoves = responseMoves.Content.ReadAsStringAsync().Result;
@@ -74,6 +90,7 @@ namespace ApiCaller
                     i++;
                     
                     //transition.Insert(popo);
+                    */
                 }
             }
             Console.WriteLine("***** ***** *****");
@@ -129,6 +146,17 @@ namespace ApiCaller
         */
 
         //Better Attempt:
+        public class PokeList
+        {
+            public List<ProtoPokemon> results { get; set; }
+        }
+
+        public class ProtoPokemon
+        {
+            public string? name { get; set; }
+            public string? url { get; set; }
+        }
+
         public class Pokemon
         {
             public int? id { get; set; }
