@@ -84,7 +84,7 @@ namespace ApiCaller
         {
             public string? version { get; set; }
         }
-
+        /*
         //Actual:
         public class Pokemon
         {
@@ -126,5 +126,60 @@ namespace ApiCaller
         //{
         //    public List<Image> sprites { get; set; }
         //}
+        */
+
+        //Better Attempt:
+        public class Pokemon
+        {
+            public int? id { get; set; }
+            public string? name { get; set; }
+            public string? url { get; set; }
+            public int? base_experience { get; set; }
+            public int? height { get; set; }
+            public int? weight { get; set; }
+            public List<AbilityGroup> abilities { get; set; }
+            public List<StatGroup> stats { get; set; }
+            public List<TypeGroup> types { get; set; }
+            public Sprites sprites { get; set; }
+
+            public class AbilityGroup
+            {
+                Ability ability { get; set; }
+            }
+            public class Ability
+            {
+                public string? name { get; set; }
+                public string? url { get; set; }
+            }
+
+            public class StatGroup
+            {
+                public int? base_stat { get; set; }
+                public int? effort { get; set; }
+                public Stat stat { get; set; }
+            }
+            public class Stat
+            {
+                public string? name { get; set; }
+                public string? url { get; set; }
+            }
+
+            public class TypeGroup
+            {
+                public int? slot { get; set; }
+                public Type type { get; set; }
+            }
+            public class Type
+            {
+                public string? name { get; set; }
+                public string? url { get; set; }
+            }
+
+            public class Sprites
+            {
+                public string? front_default { get; set; }
+                public string? back_default { get; set; }
+            }
+        }
     }
 }
