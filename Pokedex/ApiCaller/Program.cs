@@ -53,6 +53,7 @@ namespace ApiCaller
                     Console.WriteLine(newPokemon.base_experience);
                     Console.WriteLine(newPokemon.types[0].type.name);
                     Console.WriteLine(newPokemon.sprites.front_default);
+                    Console.WriteLine(newPokemon.moves[0].move.name);
                     Console.WriteLine("***** ***** *****");
                     Console.WriteLine();
 
@@ -168,6 +169,7 @@ namespace ApiCaller
             public List<AbilityGroup> abilities { get; set; }
             public List<StatGroup> stats { get; set; }
             public List<TypeGroup> types { get; set; }
+            public List<MoveGroup> moves { get; set; }
             public Sprites sprites { get; set; }
 
             public class AbilityGroup
@@ -198,6 +200,16 @@ namespace ApiCaller
                 public Type type { get; set; }
             }
             public class Type
+            {
+                public string? name { get; set; }
+                public string? url { get; set; }
+            }
+
+            public class MoveGroup
+            {
+                public Move move { get; set; }
+            }
+            public class Move
             {
                 public string? name { get; set; }
                 public string? url { get; set; }
