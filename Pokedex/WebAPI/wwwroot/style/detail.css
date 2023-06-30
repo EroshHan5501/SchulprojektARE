@@ -1,0 +1,42 @@
+@import "base.css";
+
+body {
+    height: 100%;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(88, 88, 90, 1) 35%, rgba(88, 88, 90, 1) 47%, rgba(238, 64, 53, 1) 48%);
+}
+
+header {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    background: linear-gradient(0deg, rgba(88, 88, 90, 1) 38%, rgba(255, 255, 255, 1) 38%, rgba(255, 255, 255, 1) 50%, rgba(225, 66, 56, 1) 50%);
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 50%;
+    border-radius: 60px;
+    color: white;
+    box-shadow: 0px 0px 5px white;
+}
+
+header img {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: white;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+header h1 {
+    font-size: 50px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    color: rgba(88, 88, 90);
+}
+
+header p {
+    font-size: x-large;
+}
