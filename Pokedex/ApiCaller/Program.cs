@@ -26,13 +26,13 @@ namespace ApiCaller
 
 
             //Actual:
-            PokeList pokemonList = JsonSerializer.Deserialize<PokeList>(responseBody);
+            ProtoList pokemonList = JsonSerializer.Deserialize<ProtoList>(responseBody);
 
             using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
             Console.WriteLine("***** ***** *****");
             if (pokemonList!= null && pokemonList.results!= null)
             {
-                foreach(ProtoPokemon pokemon in pokemonList.results) 
+                foreach(ProtoObject pokemon in pokemonList.results) 
                 {
                     //Console.WriteLine(pokemon.name);
                     //Console.WriteLine(pokemon.url);
@@ -61,20 +61,39 @@ namespace ApiCaller
                     Console.WriteLine();
 
                     
-                    transition.Insert(newPokemon);
-                    transition.Insert(newSprites);
+                    //transition.Insert(newPokemon);
+                    //transition.Insert(newSprites);
                 }
             }
             Console.WriteLine("***** ***** *****");
+
+            //Api request
+            HttpClient clientProtoMove = new HttpClient();
+            using HttpResponseMessage responseProtoMove = clientProtoMove.GetAsync($"{apiString}move").Result;
+            string responseBodyProtoMove = responseProtoMove.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(responseBodyProtoMove);
+            ProtoList protoMoveList = JsonSerializer.Deserialize<ProtoList>(responseBodyProtoMove);
+            if (protoMoveList != null && protoMoveList.results != null)
+            {
+                foreach (ProtoObject protoMove in protoMoveList.results)
+                {
+                    HttpClient newClient = new HttpClient();
+                    using HttpResponseMessage newResponse = newClient.GetAsync(protoMove.url).Result;
+                    string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
+                    Pokedex.Common.Move newMove = JsonSerializer.Deserialize<Pokedex.Common.Move>(newResponseBody);
+                    Console.WriteLine(newMove.id);
+                    Console.WriteLine(newMove.name);
+                }
+            }
         }
 
         //Better Attempt:
-        public class PokeList
+        public class ProtoList
         {
-            public List<ProtoPokemon> results { get; set; }
+            public List<ProtoObject> results { get; set; }
         }
 
-        public class ProtoPokemon
+        public class ProtoObject
         {
             public string? name { get; set; }
             public string? url { get; set; }
