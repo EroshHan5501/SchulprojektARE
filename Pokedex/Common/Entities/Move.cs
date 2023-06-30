@@ -1,32 +1,26 @@
-//using System.ComponentModel.DataAnnotations;
-//using System.ComponentModel.DataAnnotations.Schema;
-//using System.Text.Json.Serialization;
-//using MySqlConnector;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using MySqlConnector;
 
-//namespace Pokedex.Common;
+namespace Pokedex.Common;
 
-//[Table("moves")]
-//public class Move : IDatabaseMapable
-//{
-//    [Key]
-//    [Column("Id")]
-//    public int id { get; set; }
+[Table("moves")]
+public class Move : IDatabaseMapable
+{
+    [Key]
+    [Column("Id")]
+    public int id { get; set; }
 
-//    [Column("Name")]
-//    [JsonPropertyName("front_default")]
-//    public string Name { get; set; }
+    [Column("Name")]
+    public string name { get; set; }
 
-//    [Column("back")]
-//    [JsonPropertyName("back_default")]
-//    public string Back { get; set; }
+    //Power???
+    //Accuracy
 
-//    [Column("fpokemonId")]
-//    public int FPokemonId { get; set; }
-
-//    public void GetFrom(MySqlDataReader reader)
-//    {
-//        id = reader.GetInt32(0);
-//        Front = reader.GetString(1);
-//        Back = reader.GetString(2);
-//    }
-//}
+    public void GetFrom(MySqlDataReader reader)
+    {
+        id = reader.GetInt32(0);
+        name = reader.GetString(1);
+    }
+}
