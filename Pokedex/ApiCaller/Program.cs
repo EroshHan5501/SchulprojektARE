@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using Pokedex.Common;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ApiCaller
 {
@@ -44,16 +45,23 @@ namespace ApiCaller
                     HttpClient newClient = new HttpClient();
                     using HttpResponseMessage newResponse = newClient.GetAsync(pokemon.url).Result;
                     string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
-                    Pokemon newPokemon = JsonSerializer.Deserialize<Pokemon>(newResponseBody);
+                    Pokedex.Common.Pokemon newPokemon = JsonSerializer.Deserialize<Pokedex.Common.Pokemon>(newResponseBody);
+                    Sprite newSprites = new();
+                    Console.WriteLine(newPokemon.Sprites.Front);
+                    newSprites.Front = newPokemon.Sprites.Front; 
+                    newSprites.Back = newPokemon.Sprites.Back;
+                    newSprites.FPokemonId = newPokemon.id;
                     Console.WriteLine();
+                    Console.WriteLine(newSprites.Front);
+                    Console.WriteLine(newSprites.Back);
                     Console.WriteLine("***** ***** *****");
                     Console.WriteLine(newPokemon.name);
-                    Console.WriteLine(newPokemon.url);
+                    //Console.WriteLine(newPokemon.url);
                     Console.WriteLine(newPokemon.height);
                     Console.WriteLine(newPokemon.base_experience);
-                    Console.WriteLine(newPokemon.types[0].type.name);
-                    Console.WriteLine(newPokemon.sprites.front_default);
-                    Console.WriteLine(newPokemon.moves[0].move.name);
+                    //Console.WriteLine(newPokemon.types[0].type.name);
+                    //Console.WriteLine(newPokemon.sprites.front_default);
+                    //Console.WriteLine(newPokemon.moves[0].move.name);
                     Console.WriteLine("***** ***** *****");
                     Console.WriteLine();
 
@@ -92,6 +100,8 @@ namespace ApiCaller
                     
                     //transition.Insert(popo);
                     */
+                    transition.Insert(newPokemon);
+                    transition.Insert(newSprites);
                 }
             }
             Console.WriteLine("***** ***** *****");
@@ -163,7 +173,8 @@ namespace ApiCaller
             public int? id { get; set; }
             public string? name { get; set; }
             public string? url { get; set; }
-            public int? base_experience { get; set; }
+            [JsonPropertyName("Base_experience")]
+            public int? BaseExperience { get; set; }
             public int? height { get; set; }
             public int? weight { get; set; }
             public List<AbilityGroup> abilities { get; set; }

@@ -67,6 +67,7 @@ public class DbTransition : IDisposable {
     {
         string query = CommandBuilder.InsertCommand(entity);
 
+        Console.WriteLine(query);
         MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();

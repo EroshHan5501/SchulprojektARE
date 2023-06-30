@@ -7,28 +7,28 @@ CREATE DATABASE pokedex;
 USE pokedex;
 
 CREATE TABLE pokemon(
-    pokemonId INTEGER PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    height INTEGER NOT NULL,
-    isDefault BOOLEAN NOT NULL,
-    baseExperience INTEGER NOT NULL
+    Id INTEGER PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    BaseExperience INTEGER NOT NULL,
+    Height INTEGER NOT NULL,
+    Weight INTEGER NOT NULL
 );
 
-CREATE TABLE attack(
-    attackId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    url TEXT NOT NULL UNIQUE
+CREATE TABLE moves(
+    Id INTEGER PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE pokeattack(
+CREATE TABLE pokemoves(
     pokeattackId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    fpokemonId INTEGER REFERENCES pokemon(pokemonId),
-    fattackId INTEGER REFERENCES attack(attackId)
+    fpokemonId INTEGER REFERENCES pokemon(Id),
+    fmovesId INTEGER REFERENCES moves(Id)
 );
 
-CREATE TABLE image(
-    imageId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    url TEXT NOT NULL UNIQUE,
-    fpokemonId INTEGER REFERENCES pokemon(pokemonId) 
+CREATE TABLE sprites(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Front TEXT NOT NULL UNIQUE,
+    Back TEXT NOT NULL UNIQUE,
+    FpokemonId INTEGER REFERENCES pokemon(Id) 
 );
 

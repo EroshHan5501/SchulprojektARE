@@ -152,7 +152,12 @@ public class CommandBuilder
 
         foreach (PropertyInfo property in columnProperties)
         {
-            string name = property.Name;
+            ColumnAttribute? attr = (ColumnAttribute?)property.GetCustomAttribute(typeof(ColumnAttribute)); 
+            if (attr is null)
+            {
+                throw new Exception("Column attribute is not defined");
+            }
+            string name = attr.Name;
             string? value = property.GetValue(entity).ToString();
 
             if (property.PropertyType == typeof(string))
