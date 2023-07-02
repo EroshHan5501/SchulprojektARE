@@ -14,7 +14,7 @@
 </head>
 <body class="page page-pricing preload">
 
-<header class="header-main dark">
+<header class="header-main dark" style="position: relative;">
     <nav>
         <a href="index.html" class="logo" rel="home"> <img src="media/LogoPokemon.png" class="img-fluid"
                                                            style="height: 4rem !important;"/></a>
@@ -35,7 +35,7 @@
         <div class="center">
             <h1 class="hero">Find the Pokemon you are looking for.</h1>
         </div>
-        <div class="row margin-top" style="display: flex;justify-content: space-around;">
+        <div class="row margin-top" style="display: flex;justify-content: space-around;" id="container">
             <template id="card">
                 <div class="col-one-third card card-content"
                      style="width: 20%;display: flex;justify-content: center;flex-direction: column;">
@@ -44,13 +44,13 @@
                         <span class="pricing-duration muted sans"></span>
                         <span class="pricing-price" id="name">Name</span>
                     </h2>
-                    <img src="media/Overviewtest.png" class="img-fluid" id="image" style="max-width: 150px"/>
-                    <p class="paragraph" id="type">Type: </p>
-                    <p class="paragraph">Attacks:</p>
-                    <ul class="space-bottom">
+                    <img src="" class="img-fluid" id="image" style="max-width: 150px"/>
+                    <p class="paragraph" id="base-experience">Base-Experience: </p>
+                    <p class="paragraph" id="height">Height: </p>
+                    <!-- <ul class="space-bottom">
                         <li id="attacks">Feuerball</li>
-                    </ul>
-                    <a href="#" class="button button-secondary full-width space-top" role="button">Jetzt Ansehen</a>
+                    </ul> -->
+                    <a href="#" class="button button-secondary full-width space-top" role="button" id="detail-link">Jetzt Ansehen</a>
                 </div>
             </template>
         </div>

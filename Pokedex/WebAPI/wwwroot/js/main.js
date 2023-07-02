@@ -2,32 +2,105 @@
 
 // Remove preload class once page is fully loaded
 
-const template = document.querySelector("#card");
+document.addEventListener("DOMContentLoaded", async () => {
+    // const json = await requester("https://localhost:7212/api/Pokemon/");
+    const json = moduleGenerator(10);
 
-for (const p of pokemon) {
-  const card = template.content.clone(true);
+    const template = document.querySelector("#card");
+    const container = document.querySelector("#container");
 
-  const name= card.querySelectorAll("#name");
-  name.innerText = p.name;
-  body.appendChild(card);
+    for (const p of json) {
+      const card = template.content.cloneNode(true);
 
-  const kp = card.querySelectorAll("#kp");
-  name.innerText = p.kp;
-  body.appendChild(card);
+      console.log(p);
+      const name= card.querySelector("#name");
+      name.innerText = p.name;
+    
+      // const kp = card.querySelectorAll("#kp");
+      // name.innerText = p.kp;
+    
+      const image = card.querySelector("#image");
+      image.src = p.sprites.front_default;
+      
+      const baseExperience = card.querySelector("#base-experience");
+      baseExperience.innerText += p.base_experience;
+      
+      const height = card.querySelector("#height");
+      height.innerText += p.height;
 
-  const image = card.querySelectorAll("#image");
-  name.innerText = p.image;
-  body.appendChild(card);
+      const detailLink = card.querySelector("#detail-link");
+      detailLink.href = `https://localhost:7212/Detail.html?pokemonId=${p.id}`;
+      
+      container.appendChild(card);
+    }
 
-  const type  = card.querySelectorAll("#type");
-  name.innerText = p.type;
-  body.appendChild(card);
+});
 
-  const attacks = card.querySelectorAll("#attacks");
-  name.innerText = p.attacks;
-  body.appendChild(card);
+function moduleGenerator(n) {
+  const pokemon = {
+      id: 1,
+      name: "Hello",
+      url: "https://hello.pokemon.com/",
+      base_experience: 23,
+      height: 2,
+      abilities: [
+          {
+              ability: {
+                  name: "Attacking",
+                  url: "https://attack.com/"
+              }
+          }
+      ],
+      stats: [
+          {
+              base_stat: 235,
+              effort: 23,
+              stat: {
+                  name: "hunger",
+                  url: "https://hunger.com/"
+              }
+          }
+      ],
+      types: [
+          {
+              slot: 34,
+              type: {
+                  name: "water",
+                  url: "https://water.com"
+              }
+          }
+      ],
+      moves: [
+          {
+              move: {
+                  name: "dancing",
+                  url: "https://dancing.com/"
+              }
+          }
+      ],
+      sprites: {
+          front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
+          back_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+      }
+  }
 
+  const pokemonList = []
+  for (let i = 0; i < n; i++) {
+      pokemonList.push(pokemon);
+  }
+
+  return pokemonList;
 }
+
+async function requester(url) {
+  const response = await fetch(url);
+
+  const json = await response.json();
+
+  return json;
+}
+
+
 
 window.addEventListener('load', function() {
   Array.from(document.getElementsByTagName('body')).forEach(function(el) {
