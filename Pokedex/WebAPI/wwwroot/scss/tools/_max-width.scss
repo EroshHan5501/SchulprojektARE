@@ -1,0 +1,22 @@
+/* -----------------------------------------------------------------------------
+
+# Tools - Max Width
+
+----------------------------------------------------------------------------- */
+
+[class*="max-width-"] {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.max-width-s {
+  max-width: $max-width-s;
+}
+
+.max-width-m {
+  max-width: $max-width-m;
+}
+
+.max-width-l {
+  max-width: $max-width-l;
+}

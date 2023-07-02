@@ -1,0 +1,88 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Timeline
+
+----------------------------------------------------------------------------- */
+
+.timeline {
+  border-top: 2px solid $color-gray-dark;
+  padding-top: 1.5 * $space;
+  position: relative;
+
+  &:before,
+  &:after {
+    background: $color-gray-dark;
+    content: "";
+    height: 2px;
+    position: absolute;
+    top: -2px;
+    width: 1rem;
+  }
+
+  &:before {
+    @include rounded-left(50%);
+    left: -1rem;
+  }
+
+  &:after {
+    @include rounded-right(50%);
+    right: -1rem;
+  }
+
+  [class^="col-"] {
+    position: relative;
+
+    &:before {
+      @include rounded(50%);
+      background: $color-primary;
+      border: 4px solid $color-white;
+      content: "";
+      height: 1rem;
+      left: -3px;
+      position: absolute;
+      top: -33px;
+      width: 1rem;
+    }
+  }
+
+  @include mq("desktop-s") {
+    border-left: 2px solid $color-gray-dark;
+    border-top: none;
+    padding-left: 1.5 * $space;
+    padding-top: 0;
+
+    &:before,
+    &:after {
+      height: 1rem;
+      left: -2px;
+      width: 2px;
+    }
+
+    &:before {
+      @include rounded-left(0);
+      @include rounded-top(50%);
+      top: -1rem;
+    }
+
+    &:after {
+      @include rounded-right(0);
+      @include rounded-bottom(50%);
+      bottom: -1rem;
+      top: auto;
+    }
+
+    [class^="col-"] {
+      margin: (3 * $space) 0 0 0;
+      width: $width;
+
+      &:nth-child(2) {
+        margin-top: 3 * $space;
+      }
+
+      &:before {
+        left: -33px;
+        top: 7px;
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Alerts
+
+----------------------------------------------------------------------------- */
+
+.alert {
+  @include rounded;
+  background: $color-gray-light;
+  margin-bottom: $space;
+  padding: $space;
+
+  &.alert-default {
+    border-left: 3px solid $color-gray-dark;
+  }
+
+  &.alert-error {
+    border-left: 3px solid $color-red;
+  }
+
+  &.alert-success {
+    border-left: 3px solid $color-green;
+  }
+
+  &.alert-warning {
+    border-left: 3px solid $color-orange;
+  }
+
+  .dark & {
+    background: $color-text;
+  }
+}

@@ -1,0 +1,21 @@
+/* -----------------------------------------------------------------------------
+
+# Tools - Min Width
+
+----------------------------------------------------------------------------- */
+
+[class*="min-width-"] {
+  margin: 0 auto;
+}
+
+.min-width-s {
+  min-width: $max-width-s;
+}
+
+.min-width-m {
+  min-width: $max-width-m;
+}
+
+.min-width-l {
+  min-width: $max-width-l;
+}

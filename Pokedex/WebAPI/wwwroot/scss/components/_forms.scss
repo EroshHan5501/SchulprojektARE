@@ -1,0 +1,224 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Forms
+
+----------------------------------------------------------------------------- */
+
+form {
+  label {
+    @include font-size-default-b;
+    line-height: 2.5rem;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  input[type="text"],
+  select,
+  textarea {
+    @include appearance;
+    @include font-size-default;
+    @include rounded;
+    background: $color-gray-light;
+    border: 1px solid $color-gray-medium;
+    color: $color-text;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+
+    &:focus {
+      border: 1px solid $color-gray-dark;
+      outline: none;
+    }
+  }
+
+  input[type="email"],
+  input[type="password"],
+  input[type="text"],
+  select,
+  .select-wrapper {
+    height: 2.5rem;
+  }
+
+  .select-wrapper {
+    position: relative;
+
+    &:before {
+      @include material-icons;
+      color: $color-text;
+      content: "keyboard_arrow_down";
+      height: 2.5rem;
+      line-height: 2.5rem;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      top: 0;
+      width: 2.5rem;
+    }
+
+    select {
+      cursor: pointer;
+
+      &::-ms-expand {
+        display: none;
+      }
+    }
+  }
+
+  textarea {
+    min-height: 10rem;
+  }
+
+  /* Checkboxes and radio buttons */
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: none;
+
+    &:checked + label.checkbox:before,
+    &:checked + label.radio:before {
+      background: $color-primary;
+    }
+
+    &:checked + label.checkbox:after,
+    &:checked + label.radio:after {
+      color: $color-white;
+    }
+  }
+
+  label.checkbox,
+  label.radio {
+    @include font-size-default;
+    cursor: pointer;
+    display: block;
+    line-height: 2.5rem;
+    padding-left: 2rem;
+    position: relative;
+    width: fit-content;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    &:before {
+      @include transition;
+      background: $color-gray-medium;
+      content: "";
+      height: 1.5rem;
+      left: 0;
+      position: absolute;
+      top: 0.5rem;
+      width: 1.5rem;
+
+      .dark & {
+        background: $color-white;
+      }
+    }
+
+    &:after {
+      @include material-icons;
+      @include transition;
+      color: transparent;
+      content: "check";
+      font-size: 1.25rem;
+      height: 1.5rem;
+      left: 0;
+      line-height: 1.5rem;
+      pointer-events: none;
+      position: absolute;
+      text-align: center;
+      top: 0.5rem;
+      width: 1.5rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  label.checkbox:before {
+    @include rounded;
+  }
+
+  label.radio:before {
+    @include rounded(0.75rem);
+  }
+
+  /* Switch */
+
+  input.switch {
+    display: none;
+
+    &:checked + label.switch:before {
+      background: $color-primary;
+    }
+
+    &:checked + label.switch:after {
+      left: 26px;
+    }
+  }
+
+  label.switch {
+    cursor: pointer;
+    display: block;
+    height: 32px;
+    width: fit-content;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    &:before {
+      @include rounded(16px);
+      @include transition;
+      background: $color-gray-medium;
+      content: "";
+      display: block;
+      height: 32px;
+      width: 56px;
+
+      .dark & {
+        background: rgba($color-white, $opacity-l);
+      }
+    }
+
+    &:after {
+      @include rounded(14px);
+      @include transition;
+      background: $color-white;
+      content: "";
+      display: block;
+      height: 28px;
+      left: 2px;
+      position: relative;
+      top: -30px;
+      width: 28px;
+    }
+  }
+
+  .form-group {
+    margin-bottom: $space;
+    position: relative;
+  }
+
+  .form-help {
+    @include font-size-m;
+    color: $color-text;
+    opacity: $opacity-m;
+  }
+
+  @include mq("tablet") {
+    .row.unequal [class^="col-"].unequal {
+      margin: 0;
+    }
+  }
+
+  @include mq("mobile") {
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    select,
+    .select-wrapper {
+      height: 3rem;
+    }
+
+    .select-wrapper:before {
+      height: 3rem;
+      line-height: 3rem;
+      width: 3rem;
+    }
+  }
+}

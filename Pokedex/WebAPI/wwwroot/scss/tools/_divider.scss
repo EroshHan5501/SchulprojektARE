@@ -1,0 +1,15 @@
+/* -----------------------------------------------------------------------------
+
+# Tools - Divider
+
+----------------------------------------------------------------------------- */
+
+.divider {
+  border-bottom: 1px solid $color-gray-medium;
+  margin: (3 * $space) 0;
+  width: 100%;
+
+  .dark & {
+    border-bottom: 1px solid $color-text;
+  }
+}

@@ -1,0 +1,27 @@
+/* -----------------------------------------------------------------------------
+
+# Pages - Onboarding
+
+----------------------------------------------------------------------------- */
+
+.page-onboarding {
+  .form-help {
+    line-height: 2.5rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .featured-image {
+    height: 100%;
+    position: fixed;
+    right: 0;
+  }
+
+  @include mq("tablet") {
+    .featured-image {
+      height: 12 * $space;
+      position: relative;
+    }
+  }
+}

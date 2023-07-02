@@ -1,0 +1,56 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Footer
+
+----------------------------------------------------------------------------- */
+
+.footer-main {
+  a:not(.button) {
+    @include font-size-m;
+    color: $color-text;
+    opacity: $opacity-s;
+
+    &:hover {
+      color: $color-primary;
+      opacity: 1;
+    }
+  }
+
+  p {
+    opacity: $opacity-s;
+  }
+
+  input[type="email"] {
+    background: $color-white;
+  }
+
+  .copyright {
+    @include font-size-s;
+    opacity: $opacity-m;
+    padding-bottom: 3 * $space;
+    text-align: center;
+
+    a {
+      @include font-size-s;
+      opacity: 1;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+  }
+
+  &.dark a:not(.button) {
+    color: $color-white;
+  }
+
+  @include mq("desktop-s") {
+    a:not(.button) {
+      @include font-size-default;
+    }
+
+    .copyright a {
+      @include font-size-s;
+    }
+  }
+}

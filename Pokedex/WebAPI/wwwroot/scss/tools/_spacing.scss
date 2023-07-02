@@ -1,0 +1,129 @@
+/* -----------------------------------------------------------------------------
+
+# Tools - Spacing
+
+----------------------------------------------------------------------------- */
+
+.padding {
+  padding: 5 * $space;
+
+  @include mq("desktop-s") {
+    padding: 3 * $space;
+  }
+
+  @include mq("tablet") {
+    padding: (3 * $space) $space;
+  }
+}
+
+.padding-bottom {
+  padding-bottom: 12 * $space;
+
+  @include mq("desktop-s") {
+    padding-bottom: 10 * $space;
+  }
+
+  @include mq("tablet") {
+    padding-bottom: 8 * $space;
+  }
+}
+
+.padding-top {
+  padding-top: 12 * $space;
+
+  @include mq("desktop-s") {
+    padding-top: 10 * $space;
+  }
+
+  @include mq("tablet") {
+    padding-top: 8 * $space;
+  }
+}
+
+/* Add spacing above content */
+
+@include mq("tablet") {
+  .padding-top-tablet {
+    padding-top: 8 * $space;
+  }
+}
+
+/* Add spacing above or below content */
+
+.margin-bottom {
+  margin-bottom: 5 * $space;
+
+  @include mq("desktop-s") {
+    margin-bottom: 3 * $space;
+  }
+}
+
+.margin-top {
+  margin-top: 5 * $space;
+
+  @include mq("desktop-s") {
+    margin-top: 3 * $space;
+  }
+}
+
+/* Negative spacing */
+
+.-margin-bottom {
+  margin-bottom: -5 * $space;
+
+  @include mq("desktop-s") {
+    margin-bottom: -3 * $space;
+  }
+}
+
+.-margin-bottom-2 {
+  margin-bottom: -10 * $space;
+
+  @include mq("desktop-s") {
+    margin-bottom: -6 * $space;
+  }
+}
+
+/* Default spacing */
+
+.space {
+  margin: $space;
+}
+
+.space-bottom {
+  margin-bottom: $space;
+}
+
+.space-left {
+  padding-left: $space;
+}
+
+.space-right {
+  padding-right: $space;
+}
+
+.space-top {
+  margin-top: $space;
+}
+
+/* Remove spacing */
+
+.space-none {
+  margin: 0;
+}
+
+.space-bottom-none {
+  margin-bottom: 0;
+}
+
+.space-left-none {
+  padding-left: 0;
+}
+
+.space-right-none {
+  padding-right: 0;
+}
+
+.space-top-none {
+  margin-top: 0;
+}

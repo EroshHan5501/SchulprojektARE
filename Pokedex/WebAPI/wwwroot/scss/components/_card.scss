@@ -1,0 +1,26 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Card
+
+----------------------------------------------------------------------------- */
+
+.card {
+  margin-top: 50px!important;
+  margin: 20px!important;
+  @include rounded(0.5rem);
+  @include shadow-s;
+  background: $color-white;
+  border: 3px solid $color-red;
+
+  &.dark {
+    background: lighten($color-text, $lighten);
+  }
+}
+
+.card-content {
+  padding: 2 * $space;
+
+  @include mq("mobile") {
+    padding: 1.5 * $space;
+  }
+}

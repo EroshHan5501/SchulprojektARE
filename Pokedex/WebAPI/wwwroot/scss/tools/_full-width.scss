@@ -1,0 +1,21 @@
+/* -----------------------------------------------------------------------------
+
+# Tools - Full Width
+
+----------------------------------------------------------------------------- */
+
+.full-width {
+  width: 100% !important;
+
+  @include mq("tablet") {
+    &-tablet {
+      width: 100% !important;
+    }
+  }
+
+  @include mq("mobile") {
+    &-mobile {
+      width: 100% !important;
+    }
+  }
+}

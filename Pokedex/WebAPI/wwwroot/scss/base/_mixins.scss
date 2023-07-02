@@ -1,0 +1,287 @@
+// Alignments
+
+@mixin align-items($align: center) {
+  -webkit-align-items: $align;
+  -moz-align-items: $align;
+  -ms-align-items: $align;
+  align-items: $align;
+}
+
+// Appearance
+
+@mixin appearance($value: none) {
+  -webkit-appearance: $value;
+  -moz-appearance: $value;
+  appearance: $value;
+}
+
+// Flex
+
+@mixin flex() {
+  display: table;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: flex;
+}
+
+@mixin flex-direction($direction: column) {
+  -webkit-flex-direction: $direction;
+  -moz-flex-direction: $direction;
+  -ms-flex-direction: $direction;
+  flex-direction: $direction;
+}
+
+@mixin flex-wrap($wrap: wrap) {
+  -webkit-flex-wrap: $wrap;
+  -ms-flex-wrap: $wrap;
+  flex-wrap: $wrap;
+}
+
+// Font sizes
+
+@mixin font-size-s {
+  font-size: 0.75rem;
+  font-weight: $font-regular;
+  line-height: 1rem;
+}
+
+@mixin font-size-s-b {
+  @include font-size-s;
+  font-weight: $font-bold;
+}
+
+@mixin font-size-m {
+  font-size: 0.875rem;
+  font-weight: $font-regular;
+  line-height: 1rem;
+}
+
+@mixin font-size-m-b {
+  @include font-size-m;
+  font-weight: $font-bold;
+}
+
+@mixin font-size-default {
+  font-size: 1rem;
+  font-weight: $font-regular;
+  line-height: 1.5rem;
+}
+
+@mixin font-size-default-b {
+  @include font-size-default;
+  font-weight: $font-bold;
+}
+
+@mixin font-size-l {
+  font-size: 1.125rem;
+  font-weight: $font-regular;
+  line-height: 1.5rem;
+}
+
+@mixin font-size-l-b {
+  @include font-size-l;
+  font-weight: $font-bold;
+}
+
+@mixin font-size-lead {
+  font-size: 1.5rem;
+  font-weight: $font-regular;
+  line-height: 2rem;
+}
+
+@mixin font-size-paragraph {
+  font-size: 1.25rem;
+  font-weight: $font-regular;
+  letter-spacing: 0.3px;
+  line-height: 2rem;
+}
+
+// Justify content
+
+@mixin justify-content($justify: center) {
+  -ms-flex-pack: $justify;
+  -webkit-justify-content: $justify;
+  -moz-justify-content: $justify;
+  -ms-justify-content: $justify;
+  justify-content: $justify;
+}
+
+// Linear gradient
+
+@mixin linear-gradient($from, $to) {
+  background: $to;
+  background: -webkit-linear-gradient($from 0%, $to 100%);
+  background: -moz-linear-gradient($from 0%, $to 100%);
+  background: -ms-linear-gradient($from 0%, $to 100%);
+  background: -o-linear-gradient($from 0%, $to 100%);
+  background: linear-gradient($from 0%, $to 100%);
+}
+
+@mixin linear-gradient-diagonal($from, $to) {
+  background: $to;
+  background: -webkit-linear-gradient(140deg, $from 25%, $to 100%);
+  background: -moz-linear-gradient(140deg, $from 25%, $to 100%);
+  background: -ms-linear-gradient(140deg, $from 25%, $to 100%);
+  background: -o-linear-gradient(140deg, $from 25%, $to 100%);
+  background: linear-gradient(140deg, $from 25%, $to 100%);
+}
+
+// Material icons
+
+@mixin material-icons {
+  direction: ltr;
+  display: inline-block;
+  font-family: "Material Icons";
+  font-feature-settings: "liga";
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Rotations
+
+@mixin rotate($degree: 90deg) {
+  -webkit-transform: rotate($degree);
+  -moz-transform: rotate($degree);
+  -ms-transform: rotate($degree);
+  -o-transform: rotate($degree);
+  transform: rotate($degree);
+}
+
+// Rounded corners
+
+@mixin rounded($radius: 0.1875rem) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin rounded-bottom($radius: 0.1875rem) {
+  -webkit-border-bottom-left-radius: $radius;
+  -moz-border-radius-bottomleft: $radius;
+  border-bottom-left-radius: $radius;
+  -webkit-border-bottom-right-radius: $radius;
+  -moz-border-radius-bottomright: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin rounded-left($radius: 0.1875rem) {
+  -webkit-border-bottom-left-radius: $radius;
+  -moz-border-radius-bottomleft: $radius;
+  border-bottom-left-radius: $radius;
+  -webkit-border-top-left-radius: $radius;
+  -moz-border-radius-topleft: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin rounded-right($radius: 0.1875rem) {
+  -webkit-border-bottom-right-radius: $radius;
+  -moz-border-radius-bottomright: $radius;
+  border-bottom-right-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+  -moz-border-radius-topright: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin rounded-top($radius: 0.1875rem) {
+  -webkit-border-top-left-radius: $radius;
+  -moz-border-radius-topleft: $radius;
+  border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+  -moz-border-radius-topright: $radius;
+  border-top-right-radius: $radius;
+}
+
+// Shadows
+
+@mixin shadow-s($x: 0, $y: 1px, $blur: 3px, $color: rgba(0,0,0,0.1)) {
+  -webkit-box-shadow: $x $y $blur $color;
+  -moz-box-shadow: $x $y $blur $color;
+  box-shadow: $x $y $blur $color;
+}
+
+@mixin shadow-m($x: 0, $y: 8px, $blur: 16px, $color: rgba(0,0,0,0.1)) {
+  -webkit-box-shadow: $x $y $blur $color;
+  -moz-box-shadow: $x $y $blur $color;
+  box-shadow: $x $y $blur $color;
+}
+
+@mixin shadow-l($x: 0, $y: 32px, $blur: 40px, $color: rgba(0,0,0,0.1)) {
+  -webkit-box-shadow: $x $y $blur $color;
+  -moz-box-shadow: $x $y $blur $color;
+  box-shadow: $x $y $blur $color;
+}
+
+@mixin shadow-none {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+// Transformations
+
+@mixin transform($y: -1px) {
+  -webkit-transform: translateY($y);
+  -moz-transform: translateY($y);
+  -ms-transform: translateY($y);
+  -o-transform: translateY($y);
+  transform: translateY($y);
+}
+
+// Transitions
+
+@mixin transition($duration: 0.2s) {
+  -webkit-transition: all $duration;
+  -moz-transition: all $duration;
+  -ms-transition: all $duration;
+  -o-transition: all $duration;
+  transition: all $duration;
+}
+
+@mixin transition-none {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+// Prevent text selection
+
+@mixin user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// Media queries
+
+$breakpoints: (
+  "mobile"    : 480px,
+  "tablet"    : 768px,
+  "desktop-s" : 1024px,
+  "desktop-m" : 1440px,
+  "desktop-l" : 1920px
+);
+
+@mixin mq($width, $type: max) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}

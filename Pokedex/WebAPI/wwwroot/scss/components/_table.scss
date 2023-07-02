@@ -1,0 +1,43 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Table
+
+----------------------------------------------------------------------------- */
+
+table {
+  @include rounded;
+  background: $color-gray-light;
+  border-collapse: collapse;
+  margin-bottom: $space;
+  width: 100%;
+
+  tr {
+    border-bottom: 1px solid $color-gray-medium;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  th {
+    @include rounded-top;
+    padding: $space;
+    text-align: left;
+  }
+
+  td {
+    padding: $space;
+  }
+
+  .dark & {
+    background: $color-text;
+
+    tr {
+      border-bottom: 1px solid darken($color-text, $darken);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

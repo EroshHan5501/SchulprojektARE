@@ -1,0 +1,43 @@
+/* -----------------------------------------------------------------------------
+
+# Tools - Align
+
+----------------------------------------------------------------------------- */
+
+.center {
+  text-align: center;
+}
+
+.left {
+  float: left;
+  text-align: left;
+}
+
+.right {
+  float: right;
+  text-align: right;
+}
+
+.middle {
+  @include flex;
+  @include flex-direction;
+  @include justify-content;
+}
+
+@include mq("desktop-s") {
+  .center-desktop {
+    text-align: center;
+  }
+}
+
+@include mq("tablet") {
+  .center-tablet {
+    text-align: center;
+  }
+}
+
+@include mq("mobile") {
+  .center-mobile {
+    text-align: center;
+  }
+}

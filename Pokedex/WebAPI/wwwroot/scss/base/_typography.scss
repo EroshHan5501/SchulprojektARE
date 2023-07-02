@@ -1,0 +1,180 @@
+/* -----------------------------------------------------------------------------
+
+# Base - Typography
+
+----------------------------------------------------------------------------- */
+
+html {
+  font-size: 16px;
+  font-weight: $font-regular;
+  line-height: 24px;
+}
+
+body {
+  color: $color-text;
+  font-family: $font-sans;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  overflow-x: hidden;
+}
+
+a {
+  @include transition;
+  color: $color-primary;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover:not(.button) {
+    color: $color-text;
+    opacity: $opacity-s;
+  }
+}
+
+blockquote {
+  @include font-size-paragraph;
+  @include rounded;
+  background: $color-gray-light;
+  border-left: 3px solid $color-gray-dark;
+  font-style: italic;
+  margin: 0 0 $space 0;
+  padding: $space;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 $space 0;
+
+  &:last-child {
+    margin: 0;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: $font-serif;
+}
+
+h4,
+h5,
+h6 {
+  font-family: $font-sans;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: $font-black;
+  line-height: 5.25rem;
+
+  &.hero {
+    font-size: 3rem;
+    font-weight: $font-black;
+    line-height: 3.75rem;
+  }
+
+  @include mq("mobile") {
+    font-size: 3rem;
+    line-height: 3.75rem;
+
+    &.hero {
+      font-size: 2.5rem;
+      line-height: 3.25rem;
+    }
+  }
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: $font-black;
+  line-height: 3.75rem;
+
+  @include mq("mobile") {
+    font-size: 2.5rem;
+    line-height: 3.25rem;
+  }
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: $font-black;
+  line-height: 2.75rem;
+
+  @include mq("mobile") {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: $font-bold;
+  line-height: 2.25rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+  font-weight: $font-bold;
+  line-height: 1.75rem;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: $font-bold;
+  line-height: 1.5rem;
+  margin: 0 0 (0.5 * $space) 0;
+}
+
+p {
+  margin: 0 0 $space 0;
+
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.lead {
+  @include font-size-lead;
+
+  @include mq("mobile") {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+.paragraph {
+  @include font-size-paragraph;
+
+  &.serif {
+    font-family: $font-serif;
+  }
+
+  @include mq("mobile") {
+    font-size: 1.125rem;
+    letter-spacing: normal;
+    line-height: 1.75rem;
+  }
+}
+
+.muted {
+  opacity: $opacity-m;
+}
+
+.dark {
+  color: $color-white;
+
+  a:not(.button) {
+    color: $color-white;
+  }
+
+  blockquote {
+    background: $color-text;
+  }
+
+  p {
+    opacity: $opacity-s;
+  }
+}

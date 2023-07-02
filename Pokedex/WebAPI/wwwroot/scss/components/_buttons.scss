@@ -1,0 +1,143 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Buttons
+
+----------------------------------------------------------------------------- */
+
+.button {
+  @include font-size-default-b;
+  @include rounded(3rem);
+  @include transition;
+  display: inline-block;
+  height: 3rem;
+  line-height: 3rem;
+  padding: 0 1.25rem;
+  text-align: center;
+
+  &.button-s {
+    @include font-size-s-b;
+    height: 2rem;
+    line-height: 2rem;
+    padding: 0 0.75rem;
+  }
+
+  &.button-m {
+    @include font-size-m-b;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  &.button-l {
+    @include font-size-l-b;
+    height: 3.5rem;
+    line-height: 3.5rem;
+    padding: 0 1.5rem;
+  }
+
+  &.button-primary {
+    @include linear-gradient-diagonal($color-primary, darken($color-primary, $darken));
+    @include shadow-s;
+    color: $color-white;
+
+    &:hover {
+      @include linear-gradient-diagonal($color-primary, $color-primary);
+      @include shadow-m;
+      @include transform;
+    }
+  }
+
+  &.button-secondary {
+    background: $color-gray-medium;
+    color: $color-text;
+
+    &:hover {
+      @include transform;
+      background: $color-gray-light;
+      color: $color-primary;
+    }
+
+    .dark & {
+      background: rgba($color-white, $opacity-l);
+      color: $color-white;
+
+      &:hover {
+        background: rgba($color-white, $opacity-m);
+      }
+    }
+  }
+
+  &.button-disabled {
+    background: $color-gray-dark;
+    color: $color-text;
+    cursor: default;
+    opacity: $opacity-m;
+    pointer-events: none;
+  }
+
+  &.button-close {
+    @include rounded(100%);
+    @include shadow-s;
+    background: $color-white;
+    display: block;
+    height: 4rem;
+    line-height: 2rem;
+    opacity: $opacity-s;
+    padding: $space;
+    position: fixed;
+    right: $space;
+    text-align: center;
+    top: $space;
+    width: 4rem;
+    z-index: 10;
+
+    &:before {
+      @include material-icons;
+      color: $color-text;
+      content: "close";
+      line-height: 2rem;
+
+      /* Prevent text from icon name to show up before load */
+
+      .preload & {
+        font-size: 0;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @include mq("tablet") {
+    &.button-primary:hover,
+    &.button-secondary:hover {
+      @include shadow-none;
+      @include transform(0);
+    }
+
+    &.button-close {
+      position: absolute;
+    }
+  }
+
+  @include mq("mobile") {
+    height: 3.5rem;
+    line-height: 3.5rem;
+
+    &.button-s {
+      height: 2.5rem;
+      line-height: 2.5rem;
+    }
+
+    &.button-m {
+      height: 3rem;
+      line-height: 3rem;
+    }
+
+    &.button-l {
+      height: 4rem;
+      line-height: 4rem;
+    }
+  }
+}

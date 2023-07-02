@@ -1,0 +1,265 @@
+/* -----------------------------------------------------------------------------
+
+# Base - Grid
+
+----------------------------------------------------------------------------- */
+
+$width: 100%;
+$gutter: 4%;
+
+.row {
+  @include flex;
+  @include flex-wrap;
+  width: $width;
+
+  .col-one-half { width: $width / 2 - $gutter * 1 / 2; }
+  .col-one-third { width: $width / 3 - $gutter * 2 / 3; }
+  .col-one-fourth { width: $width / 4 - $gutter * 3 / 4; }
+  .col-one-fifth { width: $width / 5 - $gutter * 4 / 5; }
+  .col-two-thirds { width: ($width / 3 - $gutter * 2 / 3) * 2 + $gutter; }
+  .col-two-fourths { width: ($width / 4 - $gutter * 3 / 4) * 2 + $gutter; }
+  .col-two-fifths { width: ($width / 5 - $gutter * 4 / 5) * 2 + $gutter; }
+  .col-three-fourths { width: ($width / 4 - $gutter * 3 / 4) * 3 + 2 * $gutter; }
+  .col-three-fifths { width: ($width / 5 - $gutter * 4 / 5) * 3 + 2 * $gutter; }
+  .col-four-fifths { width: ($width / 5 - $gutter * 4 / 5) * 4 + 3 * $gutter; }
+
+  [class^="col-"] {
+    float: left;
+    margin: 0 ($gutter / 2);
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @include mq("desktop-s") {
+    [class^="col-"] {
+      margin: (3 * $space) ($gutter / 2) 0 ($gutter / 2);
+      width: $width / 2 - $gutter * 1 / 2;
+
+      &:nth-child(-n+2) {
+        margin-top: 0;
+      }
+
+      &:nth-child(odd) {
+        margin-left: 0;
+      }
+
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+
+      &:last-child:nth-child(odd) {
+        width: $width;
+      }
+    }
+
+    [class*="-fifth"] {
+      margin: (3 * $space) 0 0 0;
+      width: $width;
+
+      &:nth-child(2) {
+        margin-top: 3 * $space;
+      }
+    }
+  }
+
+  @include mq("tablet") {
+    [class^="col-"] {
+      margin: (3 * $space) 0 0 0;
+      width: $width;
+
+      &:nth-child(2) {
+        margin-top: 3 * $space;
+      }
+    }
+  }
+}
+
+/* Reduce spacing between rows */
+
+.row.reduce-spacing {
+  @include mq("desktop-s") {
+    [class^="col-"] {
+      margin: $space ($gutter / 2) 0 ($gutter / 2);
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:nth-child(-n+2) {
+        margin-top: 0;
+      }
+
+      &:nth-child(odd) {
+        margin-left: 0;
+      }
+
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+    }
+
+    [class*="-fifth"] {
+      margin: $space 0 0 0;
+
+      &:nth-child(2) {
+        margin-top: $space;
+      }
+    }
+  }
+
+  @include mq("tablet") {
+    [class^="col-"] {
+      margin: $space 0 0 0;
+
+      &:nth-child(2) {
+        margin-top: $space;
+      }
+    }
+  }
+}
+
+/* Reverse the order of columns when going full-width */
+
+.row.reverse-order {
+  @include mq("tablet") {
+    [class^="col-"] {
+      margin: (3 * $space) 0 0 0;
+
+      &:last-child {
+        margin-top: 0;
+      }
+
+      &:nth-child(1) {
+        -webkit-order: 5;
+        -moz-order: 5;
+        order: 5;
+      }
+
+      &:nth-child(2) {
+        -webkit-order: 4;
+        -moz-order: 4;
+        order: 4;
+      }
+
+      &:nth-child(3) {
+        -webkit-order: 3;
+        -moz-order: 3;
+        order: 3;
+      }
+
+      &:nth-child(4) {
+        -webkit-order: 2;
+        -moz-order: 2;
+        order: 2;
+      }
+
+      &:nth-child(5) {
+        -webkit-order: 1;
+        -moz-order: 1;
+        order: 1;
+      }
+    }
+
+    &.reduce-spacing [class^="col-"] {
+      margin: $space 0 0 0;
+
+      &:last-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+/* Force a minimum of two columns */
+
+.row.min-two-columns:not(.reverse-order) {
+  @include mq("desktop-s") {
+    [class^="col-"] {
+      margin: (3 * $space) ($gutter / 2) 0 ($gutter / 2);
+      width: $width / 2 - $gutter * 1 / 2;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:nth-child(-n+2) {
+        margin-top: 0;
+      }
+
+      &:nth-child(odd) {
+        margin-left: 0;
+      }
+
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+
+      &:last-child:nth-child(odd) {
+        width: $width;
+      }
+    }
+
+    &.reduce-spacing {
+      [class^="col-"] {
+        margin: $space ($gutter / 2) 0 ($gutter / 2);
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:nth-child(-n+2) {
+          margin-top: 0;
+        }
+
+        &:nth-child(odd) {
+          margin-left: 0;
+        }
+
+        &:nth-child(even) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+/* Remove gutter between columns */
+
+.row.no-gutter {
+  .col-one-half { width: $width / 2; }
+  .col-one-third { width: $width / 3; }
+  .col-one-fourth { width: $width / 4; }
+  .col-one-fifth { width: $width / 5; }
+  .col-two-thirds { width: ($width / 3) * 2; }
+  .col-two-fourths { width: ($width / 4) * 2; }
+  .col-two-fifths { width: ($width / 5) * 2; }
+  .col-three-fourths { width: ($width / 4) * 3; }
+  .col-three-fifths { width: ($width / 5) * 3; }
+  .col-four-fifths { width: ($width / 5) * 4; }
+
+  [class^="col-"] {
+    margin: 0 !important;
+  }
+
+  @include mq("desktop-s") {
+    [class^="col-"] {
+      width: $width / 2;
+    }
+
+    [class*="-fifth"] {
+      width: $width;
+    }
+  }
+
+  @include mq("tablet") {
+    [class^="col-"] {
+      width: $width;
+    }
+  }
+}

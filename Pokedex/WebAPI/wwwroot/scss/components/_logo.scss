@@ -1,0 +1,39 @@
+/* -----------------------------------------------------------------------------
+
+# Components - Logo
+
+----------------------------------------------------------------------------- */
+
+.logo {
+  @include transition;
+  color: $color-text;
+  display: block;
+  float: left;
+  font-size: 1.5rem;
+  font-weight: $font-black;
+  height: 2.5rem;
+  letter-spacing: 0.5px;
+  line-height: 2.5rem;
+  margin-right: 2.5 * $space;
+  opacity: 1 !important;
+
+  span {
+    display: inline-block;
+    font-family: $font-serif;
+    vertical-align: top;
+  }
+
+  img,
+  svg {
+    height: 2rem;
+    margin: 0.25rem;
+  }
+
+  .dark & {
+    color: $color-white;
+  }
+
+  @include mq("tablet") {
+    @include transition-none;
+  }
+}
