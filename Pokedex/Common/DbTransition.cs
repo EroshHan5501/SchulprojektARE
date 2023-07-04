@@ -2,10 +2,13 @@ using System.Data;
 using MySqlConnector;
 using System.Reflection;
 using Pokedx.Common;
+using System.Data.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pokedex.Common;
 
-public class DbTransition : IDisposable {
+public class DbTransition : IDisposable
+{
     private static string ConnectionString => "server=localhost;uid=poketrainer;password=password123;database=pokedex";
 
     private MySqlConnection DbConnection { get; set; }
@@ -16,17 +19,19 @@ public class DbTransition : IDisposable {
 
         ResetConnection();
     }
-    
-    private void ResetConnection() {
-        if (DbConnection.State == ConnectionState.Open) {
+
+    private void ResetConnection()
+    {
+        if (DbConnection.State == ConnectionState.Open)
+        {
             DbConnection.Close();
         }
 
         DbConnection.Open();
     }
 
-    public IEnumerable<T> GetFromDatabase<T>(string query, QueryOptions options) 
-        where T : IDatabaseMapable, new()
+    public IEnumerable<T> GetFromDatabase<T>(string query, QueryOptions options)
+        where T : new()
     {
         ResetConnection();
 
@@ -37,29 +42,31 @@ public class DbTransition : IDisposable {
         return entities;
     }
 
-    private MySqlDataReader ExecuteCommand(string query) {
+    private MySqlDataReader ExecuteCommand(string query)
+    {
         using MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         return command.ExecuteReader();
     }
 
-    private IEnumerable<T> MapInternal<T>(MySqlDataReader reader, QueryOptions options) 
-        where T : IDatabaseMapable, new()
+    private IEnumerable<T> MapInternal<T>(MySqlDataReader reader, QueryOptions options)
+        where T : new()
     {
         List<T> entities = new List<T>();
 
-        while(reader.Read()) {
+        while (reader.Read())
+        {
 
-            T entity = new T();
-
-            entity.GetFrom(reader); 
+            T entity = CreateEntityFromDatabase<T>(reader);
 
             entities.Add(entity);
         }
 
-        foreach (T entity in entities) {
-            
-            if (entity is IDatabaseRelatable && options.IncludeRelations) {
+        foreach (T entity in entities)
+        {
+
+            if (entity is IDatabaseRelatable && options.IncludeRelations)
+            {
                 IDatabaseRelatable relatable = (IDatabaseRelatable)entity;
 
                 relatable.GetRelatedEntities(ConnectionString);
@@ -69,7 +76,41 @@ public class DbTransition : IDisposable {
         return entities;
     }
 
-    public void Insert<T>(T entity) 
+    private T CreateEntityFromDatabase<T>(MySqlDataReader reader) where T : new()
+    {
+        var columns = reader.GetColumnSchema();
+
+        T entity = new T();
+
+        foreach (DbColumn column in columns)
+        {
+            Type entityType = entity.GetType();
+
+            var properties = entityType
+                .GetProperties()
+                .Where(x => x.IsDefined(typeof(ColumnAttribute)));
+
+
+            object columnValue = reader.GetValue(column.ColumnName);
+
+            foreach (PropertyInfo property in properties)
+            {
+                ColumnAttribute? attr = (ColumnAttribute?)property.GetCustomAttribute(typeof(ColumnAttribute));
+
+                if (attr == null || string.IsNullOrEmpty(attr.Name) || attr.Name != column.ColumnName)
+                {
+                    continue;
+                }
+
+                property.SetValue(entity, columnValue);
+                break;
+            }
+        }
+
+        return entity;
+    }
+
+    public void Insert<T>(T entity)
     {
         ResetConnection();
         string query = CommandBuilder.InsertCommand(entity);
@@ -84,14 +125,15 @@ public class DbTransition : IDisposable {
         type.GetProperties()
             .Where(prop => prop.IsDefined(typeof(RelationAttribute)));
 
-    public void Insert<T>(IEnumerable<T> entities)  
+    public void Insert<T>(IEnumerable<T> entities)
     {
-        foreach(T entity in entities) {
+        foreach (T entity in entities)
+        {
             Insert(entity);
         }
     }
 
-    public void Update<T>(T entity) 
+    public void Update<T>(T entity)
     {
         ResetConnection();
 
@@ -102,17 +144,18 @@ public class DbTransition : IDisposable {
         command.ExecuteNonQuery();
     }
 
-    public void Update<T>(IEnumerable<T> entities) 
+    public void Update<T>(IEnumerable<T> entities)
     {
-        foreach (T entity in entities) {
+        foreach (T entity in entities)
+        {
             Update(entity);
         }
     }
 
-    public void Delete<T>(T entity) 
+    public void Delete<T>(T entity)
     {
         ResetConnection();
-        
+
         string query = CommandBuilder.DeleteCommand(entity);
 
         MySqlCommand command = new MySqlCommand(query, DbConnection);
@@ -120,9 +163,10 @@ public class DbTransition : IDisposable {
         command.ExecuteNonQuery();
     }
 
-    public void Delete<T>(IEnumerable<T> entities) 
+    public void Delete<T>(IEnumerable<T> entities)
     {
-        foreach (T entity in entities) {
+        foreach (T entity in entities)
+        {
             Delete(entity);
         }
     }
@@ -135,9 +179,9 @@ public class DbTransition : IDisposable {
         GC.SuppressFinalize(this);
     }
 
-    private void Dispose(bool dispose) 
+    private void Dispose(bool dispose)
     {
-        if (!dispose || !isDisposed) 
+        if (!dispose || !isDisposed)
         {
             return;
         }

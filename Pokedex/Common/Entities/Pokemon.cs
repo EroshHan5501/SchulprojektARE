@@ -52,19 +52,12 @@ public class Pokemon : IDatabaseRelatable
         Images = new List<Image>();
     }
 
-    public void GetFrom(MySqlDataReader reader)
-    {
-        id = reader.GetInt32(0);
-        name = reader.GetString(1);
-        height = reader.GetInt32(2);
-        weight = reader.GetInt32(3);
-        base_experience = reader.GetInt32(4);
-    }
 
     public void GetRelatedEntities(string connectionString)
     {
         using DbTransition trans1 = new DbTransition();
 
+        //Überarbeiten des Select-Befehls
         IEnumerable<Attack> result1 = trans1.GetFromDatabase<Attack>(
             $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={id}", 
             new QueryOptions() { IncludeRelations = false});
@@ -73,6 +66,7 @@ public class Pokemon : IDatabaseRelatable
 
         using DbTransition trans2 = new DbTransition();
 
+        //Auch überarbeiten
         IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={id}", 
         new QueryOptions() { IncludeRelations = false});
 

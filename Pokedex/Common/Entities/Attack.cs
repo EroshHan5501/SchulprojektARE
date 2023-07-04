@@ -17,19 +17,12 @@ public class Attack : IDatabaseRelatable
 
     [Column("url")]
     public string Url { get; set; }
-    
+
     public List<Pokemon> Pokemons { get; set; }
 
     public Attack()
     {
-        Pokemons = new List<Pokemon>();    
-    }
-
-    public void GetFrom(MySqlDataReader reader)
-    {
-        AttackId = reader.GetInt32(0);
-        Name = reader.GetString(1);
-        Url = reader.GetString(2);
+        Pokemons = new List<Pokemon>();
     }
 
     public void GetRelatedEntities(string connectionString)
@@ -38,7 +31,7 @@ public class Attack : IDatabaseRelatable
 
         IEnumerable<Pokemon> pokemons = trans.GetFromDatabase<Pokemon>(
             $"SELECT pokemonId, name, height, isDefault, baseExperience FROM pokemon, pokeattack WHERE pokeattack.fpokemonId=pokemon.pokemonId AND pokeattack.fattackId={AttackId}",
-            new QueryOptions() { IncludeRelations = false}); 
+            new QueryOptions() { IncludeRelations = false });
 
         Pokemons = pokemons.ToList();
     }
