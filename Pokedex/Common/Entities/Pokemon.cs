@@ -1,7 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using MySqlConnector;
 using Pokedx.Common;
 
@@ -11,34 +10,20 @@ namespace Pokedex.Common;
 public class Pokemon : IDatabaseRelatable
 {
     [Key]
-    [Column("Id")]
-    public int id { get; set; }
-    [Column("Name")]
-    public string? name { get; set; }
-    //[Column("Url")]
-    //public string? url { get; set; }
-    [Column("BaseExperience")]
-    [JsonPropertyName("base_experience")]
-    public int? base_experience { get; set; }
-    [Column("Height")]
-    public int? height { get; set; }
-    [Column("Weight")]
-    public int? weight { get; set; }
-    //public List<AbilityGroup> Abilities { get; set; }
-    //public List<StatGroup> Stats { get; set; }
-    //public List<TypeGroup> Types { get; set; }
-    public List<MoveGroup> moves { get; set; }
-    public class MoveGroup
-    {
-        public Move move { get; set; }
-    }
-    public class Move
-    {
-        public string? name { get; set; }
-        public string? url { get; set; }
-    }
-    [JsonPropertyName("sprites")]
-    public Sprite Sprites { get; set; }
+    [Column("pokemonId")]
+    public int PokemonId { get; set; }
+
+    [Column("name")]
+    public string Name { get; set; }
+
+    [Column("height")]
+    public int Height { get; set; }
+
+    [Column("isDefault")]
+    public bool IsDefault { get; set; }
+
+    [Column("baseExperience")]
+    public int BaseExperience { get; set; }
 
     [Relation("pokeAttack", RelationType.ManyToMany)]
     public List<Attack> Attacks { get; set; }
@@ -52,23 +37,20 @@ public class Pokemon : IDatabaseRelatable
         Images = new List<Image>();
     }
 
-
     public void GetRelatedEntities(string connectionString)
     {
         using DbTransition trans1 = new DbTransition();
 
-        //Überarbeiten des Select-Befehls
         IEnumerable<Attack> result1 = trans1.GetFromDatabase<Attack>(
-            $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={id}", 
-            new QueryOptions() { IncludeRelations = false});
+            $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={PokemonId}",
+            new QueryOptions() { IncludeRelations = false });
 
         Attacks = result1.ToList();
 
         using DbTransition trans2 = new DbTransition();
 
-        //Auch überarbeiten
-        IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={id}", 
-        new QueryOptions() { IncludeRelations = false});
+        IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={PokemonId}",
+        new QueryOptions() { IncludeRelations = false });
 
         Images = result2.ToList();
     }
