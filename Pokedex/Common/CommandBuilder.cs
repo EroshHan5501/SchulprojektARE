@@ -154,7 +154,15 @@ public class CommandBuilder
                 throw new Exception("Column attribute is not defined");
             }
             string name = attr.Name;
-            string? value = property.GetValue(entity).ToString();
+            string? value;
+            if (property.GetValue(entity) == null)
+            {
+                value = "null";
+            }
+            else
+            {
+                value = property.GetValue(entity).ToString();
+            }
 
             if (property.PropertyType == typeof(string))
             {

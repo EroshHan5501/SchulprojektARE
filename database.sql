@@ -8,10 +8,10 @@ USE pokedex;
 
 CREATE TABLE pokemon(
     Id INTEGER PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL,
-    BaseExperience INTEGER NOT NULL,
-    Height INTEGER NOT NULL,
-    Weight INTEGER NOT NULL
+    Name VARCHAR(100),
+    BaseExperience INTEGER,
+    Height INTEGER,
+    Weight INTEGER
 );
 
 CREATE TABLE moves(
@@ -20,15 +20,15 @@ CREATE TABLE moves(
 );
 
 CREATE TABLE pokemoves(
-    pokeattackId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    fpokemonId INTEGER REFERENCES pokemon(Id),
-    fmovesId INTEGER REFERENCES moves(Id)
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    PokeId INTEGER REFERENCES pokemon(Id),
+    MoveId INTEGER REFERENCES moves(Id)
 );
 
 CREATE TABLE sprites(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    Front TEXT NOT NULL UNIQUE,
-    Back TEXT NOT NULL UNIQUE,
+    Front TEXT UNIQUE,
+    Back TEXT UNIQUE,
     FpokemonId INTEGER REFERENCES pokemon(Id) 
 );
 

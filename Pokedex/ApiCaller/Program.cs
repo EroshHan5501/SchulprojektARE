@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using Pokedex.Common;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,9 +18,34 @@ namespace ApiCaller
                 input = args[0];
             }
 
+            using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
+            //Moves
+            //Api request
+            HttpClient clientProtoMove = new HttpClient();
+            using HttpResponseMessage responseProtoMove = clientProtoMove.GetAsync($"{apiString}move?limit=918").Result;
+            string responseBodyProtoMove = responseProtoMove.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(responseBodyProtoMove);
+            ProtoList protoMoveList = JsonSerializer.Deserialize<ProtoList>(responseBodyProtoMove);
+            if (protoMoveList != null && protoMoveList.results != null)
+            {
+                foreach (ProtoObject protoMove in protoMoveList.results)
+                {
+                    HttpClient newClient = new HttpClient();
+                    using HttpResponseMessage newResponse = newClient.GetAsync(protoMove.url).Result;
+                    string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
+                    Pokedex.Common.Move newMove = JsonSerializer.Deserialize<Pokedex.Common.Move>(newResponseBody);
+                    Console.WriteLine(newMove.id);
+                    Console.WriteLine(newMove.name);
+                    transition.Insert(newMove);
+                }
+            }
+
+            //Pokemon && PokeMoves
             //Api request
             HttpClient client = new HttpClient();
-            using HttpResponseMessage response = client.GetAsync($"{apiString}{input}").Result;
+            using HttpResponseMessage response = client.GetAsync($"{apiString}{input}?limit=1281").Result;
+            //using HttpResponseMessage response = client.GetAsync($"{apiString}{input}?limit=20&offset=898").Result;
+            //using HttpResponseMessage response = client.GetAsync($"{apiString}pokemon/899").Result;
             string responseBody = response.Content.ReadAsStringAsync().Result;
             Console.WriteLine(responseBody);
 
@@ -28,7 +54,6 @@ namespace ApiCaller
             //Actual:
             ProtoList pokemonList = JsonSerializer.Deserialize<ProtoList>(responseBody);
 
-            using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
             Console.WriteLine("***** ***** *****");
             if (pokemonList!= null && pokemonList.results!= null)
             {
@@ -60,31 +85,37 @@ namespace ApiCaller
                     Console.WriteLine("***** ***** *****");
                     Console.WriteLine();
 
-                    
-                    //transition.Insert(newPokemon);
-                    //transition.Insert(newSprites);
+                    //if (newPokemon.id == 899)
+                    //{
+                    //    Debugger.Launch();
+                    //}
+                    transition.Insert(newPokemon);
+                    if (newSprites != null && newSprites.Front != null && newSprites.Back != null && newSprites.FPokemonId != null)
+                    {
+                    transition.Insert(newSprites);
+
+                    }
+
+                    foreach (Pokemon.MoveGroup moveGroup in newPokemon.moves)
+                    {
+                        Console.WriteLine(moveGroup.move.url);
+                        Console.WriteLine(moveGroup.move.url.LastIndexOf("move/"));
+                        Console.WriteLine(moveGroup.move.url.LastIndexOf('/'));
+                        int startPos = moveGroup.move.url.LastIndexOf("move/") + 5;
+                        int endPos = moveGroup.move.url.LastIndexOf('/');
+                        int range = endPos - startPos;
+                        Console.WriteLine(moveGroup.move.url.Substring(startPos, range));
+                        int moveId = Convert.ToInt32(moveGroup.move.url.Substring(startPos, range));
+
+                        PokeMove pokeMove = new PokeMove();
+                        pokeMove.pokeId = newPokemon.id;
+                        pokeMove.moveId = moveId;
+                        transition.Insert(pokeMove);
+                    }
                 }
             }
             Console.WriteLine("***** ***** *****");
 
-            //Api request
-            HttpClient clientProtoMove = new HttpClient();
-            using HttpResponseMessage responseProtoMove = clientProtoMove.GetAsync($"{apiString}move").Result;
-            string responseBodyProtoMove = responseProtoMove.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(responseBodyProtoMove);
-            ProtoList protoMoveList = JsonSerializer.Deserialize<ProtoList>(responseBodyProtoMove);
-            if (protoMoveList != null && protoMoveList.results != null)
-            {
-                foreach (ProtoObject protoMove in protoMoveList.results)
-                {
-                    HttpClient newClient = new HttpClient();
-                    using HttpResponseMessage newResponse = newClient.GetAsync(protoMove.url).Result;
-                    string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
-                    Pokedex.Common.Move newMove = JsonSerializer.Deserialize<Pokedex.Common.Move>(newResponseBody);
-                    Console.WriteLine(newMove.id);
-                    Console.WriteLine(newMove.name);
-                }
-            }
         }
 
         //Better Attempt:

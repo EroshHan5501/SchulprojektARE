@@ -27,7 +27,16 @@ public class Pokemon : IDatabaseRelatable
     //public List<AbilityGroup> Abilities { get; set; }
     //public List<StatGroup> Stats { get; set; }
     //public List<TypeGroup> Types { get; set; }
-    //public List<MoveGroup> Moves { get; set; }
+    public List<MoveGroup> moves { get; set; }
+    public class MoveGroup
+    {
+        public Move move { get; set; }
+    }
+    public class Move
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
     [JsonPropertyName("sprites")]
     public Sprite Sprites { get; set; }
 
