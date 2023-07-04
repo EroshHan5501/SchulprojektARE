@@ -3,9 +3,7 @@
 // Remove preload class once page is fully loaded
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // const json = await requester("https://localhost:7212/api/Pokemon/");
-    const json = moduleGenerator(10);
-
+    const json = await fetch("https://localhost:7212/api/Pokemon/");
     const template = document.querySelector("#card");
     const container = document.querySelector("#container");
 
@@ -92,13 +90,6 @@ function moduleGenerator(n) {
   return pokemonList;
 }
 
-async function requester(url) {
-  const response = await fetch(url);
-
-  const json = await response.json();
-
-  return json;
-}
 
 
 
