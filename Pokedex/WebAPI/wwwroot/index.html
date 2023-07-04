@@ -1,35 +1,178 @@
-﻿<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Pokedex</title>
-    <script src="./js/index.js"></script>
-    <link rel="stylesheet" href="./style/index.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Shadows+Into+Light">
+    <title>Pokemon API, Annika, Eren, Ron</title>
+    <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width">
+    <link rel="apple-touch-icon-precomposed" href="media/LogoPokemon.png">
+    <link rel="icon" href="media/LogoPokemon.png">
+    <link rel="mask-icon" href="media/LogoPokemon.png" color="rgb(36,38,58)">
+    <link rel="shortcut icon" href="media/LogoPokemon.png">
+    <link rel="stylesheet" href="css/main.css">
 </head>
+<body class="page page-home preload">
 
-<body>
-    <template id="preview">
-        <div class="pokeball grid-item">
-            <img src="" id="pokemon-img">
-            <div class="pokeball-content">
-                <a href="" id="pokemon-link" class="pokemon-link">
-                    <h1 id="pokemon-name"></h1>
-                </a>
-                <p>Height: <span id="height"></span></p>
-                <p>Base-experience: <span id="base-experience"></span></p>
+<header class="header-main dark">
+    <nav>
+        <a href="index.html" class="logo" rel="home"> <img src="media/LogoPokemon.png" class="img-fluid"
+                                                           style="height: 4rem !important;"/></a>
+        <div class="nav-toggle"></div>
+        <ul class="inline right">
+            <li><a href="index.html" class="active" style="color: black; text-decoration: underline;"> Startseite</a></li>
+            <li><a href="Backlog.html" class="active" style="color: black;">Tasks</a></li>
+            <li><a href="Overview.html" style="color: black;">Übersicht</a></li>
+            <li><a href="Detail.html" style="color: black;">Detail</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section class="banner bg-gradient-primary">
+        <div class="row">
+            <div class="col-12 col-lg-2">
+                <div class="banner-right">
+
+                </div>
+
+            </div>
+            <div class="col-12 col-lg-10">
+                <div class="banner-left">
+                    <div class="container">
+                        <div class="contentbanner" style="color: white;">
+                            <h2> BFK-S Pokedek API Projekt</h2> <br/>
+                            <h3>Annika, Eren, Ron</h3><br/>
+                            <p>E2FI3 BFK-S, Herr Baldes & Herr Schuhmacher</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="bg-gradient-light -margin-bottom-2 overlay padding">
+        <div class="center max-width-m">
+            <h2>Erklärung unseres Projekts</h2>
+            <p class="paragraph">Wir haben einen Pokedex gebaut!</p>
+        </div>
+        <div class="margin-top max-width-l">
+            <img class="rounded shadow-l" src="media/pokemonwallpaper.jpg" style="object-fit: cover;width: 100%;">
+        </div>
+    </section>
+
+
+    <section class="padding">
+        <div class="max-width-l">
+            <div class="center">
+                <br/><br/><br/>
+                <br/><br/><br/>
+                <h2>Timeline</h2>
+                <p class="paragraph">Unser Gedankengang</p>
+            </div>
+            <div class="row margin-top timeline">
+                <div class="col-one-fourth">
+                    <h5>Überlegung</h5>
+                    <p>Welche API ist cool genug für uns?</p>
+                </div>
+                <div class="col-one-fourth">
+                    <h5>Entscheidung</h5>
+                    <p>PokemonApi ausgesucht</p>
+                </div>
+                <div class="col-one-fourth">
+                    <h5>Entwicklung Backend</h5>
+                    <p>Ron und Eren</p>
+                </div>
+                <div class="col-one-fourth">
+                    <h5>Entwicklung Frontend</h5>
+                    <p>Annika</p>
+                </div>
             </div>
         </div>
-    </template>
-    <header>
-        <img src="https://crystal-cdn2.crystalcommerce.com/photos/6330565/splashBanner_pokemon.jpg" id="banner">
-    </header>
-    <main>
-        <h1 class="main-heading">Pokedex</h1>
-        <div id="container" class="grid-container">
-
+    </section>
+    <section class="bg-gradient-light -margin-bottom-2 overlay padding">
+        <div class="center max-width-m">
+            <h2>1. Besprechung 5. Mai</h2>
+            <p class="paragraph" style="text-align: left!important;">Erstbesprechung:<br/><br/><b>Ziel:</b> Auf API
+                einigen und Arbeit verteilen <br/> Kurze Besprechung der Arbeitsschritte hat sehr gut funktioniert und
+                jeder weiß, was er zu tun
+                hat. Kommunikation klar und effizient geregelt. Git Repo wurde erstellt<br/>Auf PokemonAPI
+                geeinigt.<br/><br/><b>Ziele wie erreicht?:</b> <br/> (X) Auf API geeiningt
+                <br/> (X) Kreativer Ideenaustausch bei Wahl von API <br/> (X) Klare Aufteilung der Aufgaben <br/>
+                Verbesserungen: Keine</p>
         </div>
-    </main>
-</body>
+        <div class="center max-width-m">
+            <br/><br/>
+            <h2>Standup 23. Mai</h2>
+            <p class="paragraph" style="text-align: left!important;">2. Standup:<br/><br/>
+                <b>Ziel:</b>
+                Über Ferien nachsehen, ob Aufgaben und jeweilige Ausführung klar sind und ob Hilfe benötigt wird. Ggf
+                schon anfangen.<br/>
+                Auf Zeitziel 1. Juli geeinigt für alle<br/><br/><b>Ziele wie erreicht?:</b> <br/>
+                (X) Auf Zeitziel geeiningt<br/>
+                (X) Genaueres anschauen der Aufgaben<br/>
+                (X) Klare Aufteilung der Aufgaben
+                <br/> Verbesserungen: Keine <br/> Die Gruppe funktioniert harmonisch und ist untereinander hilfsbereit.
+            </p>
+        </div>
+        <div class="center max-width-m">
+            <br/><br/>
+            <h2>Standup 13. Juni</h2>
+            <p class="paragraph" style="text-align: left!important;">3. Standup:<br/><br/>
+                <b>Ziel:</b>
+                Erste Ergebnisse vorzeigen und Fragen klären.<br/><br/><b>Ziele wie erreicht?:</b> <br/>
+                (X) Alle angefangen<br/>
+                (X) Klärung der Details fürs Frontend<br/>
+                (X) Backend Entwicklung im vollen Gang
+                <br/> Verbesserungen: Keine <br/>Jeder hällt sich an sein Zeitziel. Die Gruppe steht im ständigen
+                Austausch für die jeweiligen Anbindungen und kombinationen der Aufgaben.</p>
+        </div>
+        <div class="center max-width-m">
+            <br/><br/>
+            <h2>Standup 20. Juni</h2>
+            <p class="paragraph" style="text-align: left!important;">4. Standup:<br/><br/>
+                <b>Ziel:</b>
+                Kurzes erklären bezüglich der jeweiligen Fortschritte und weitere Ausplanung der nächsten
+                Schritte<br/><br/><b>Ziele wie erreicht?:</b> <br/>
+                (X) Stand von allen aktualisiert<br/>
+                (X) Fortschritt erkennbar<br/>
+                (X) Design fürs Frontend vorgestellt und dafür entschieden
+                (X) Zeitziel noch realistisch
+                <br/> Verbesserungen: Keine <br/>Jeder hällt sich weiterhin an sein Zeitziel. Die Gruppe steht im
+                ständigen Austausch für die jeweiligen Anbindungen und kombinationen der Aufgaben.</p>
+        </div>
+        <div class="center max-width-m">
+            <br/><br/>
+            <h2>Standup 30. Juni</h2>
+            <p class="paragraph" style="text-align: left!important;">5. Standup:<br/><br/>
+                <b>Ziel:</b>
+                Kurzes besprechen bezüglich der jeweiligen Fortschritte und weitere Ausplanung der nächsten Schritte
+                wegen dem näher rückenden Zeitziel<br/><br/><b>Ziele wie erreicht?:</b> <br/>
+                (X) Stand von allen aktualisiert<br/>
+                (X) Fortschritt erkennbar<br/>
+                (X) Programmierung Frontend fertig
 
+                <br/> Verbesserungen: Zeitziel wird langsam knapp, aber alles noch im Rahmen. Die Gruppe braucht etwas
+                länger als geplant</p>
+        </div>
+        <div class="margin-top max-width-l">
+            <img class="rounded shadow-l" src="media/pokemonwallpaper.jpg" style="object-fit: cover;width: 100%;">
+        </div>
+    </section>
+</main>
+
+<footer class="footer-main bg-gradient-primary dark overlay-shape-06">
+    <div class="padding">
+        <div class="center margin-bottom max-width-m">
+            <h3>Pokemon API</h3>
+        </div>
+        <div class="row center-desktop max-width-l" style="justify-content: center;flex-direction: column;">
+            <h6>Pokemon API by Annika, Eren und Ron</h6><br/>
+            <p>We're completely crazy.<br/> Please help us.</p>
+        </div>
+    </div>
+    <p class="copyright">Pokemon API by Annika, Eren und Ron © 2023, all rights reserved.</span></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
 </html>
