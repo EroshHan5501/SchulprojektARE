@@ -12,4 +12,4 @@ Database Hoster: https://remotemysql.com/
 ## User
 EroshHan5501 = Eren Üzer /
 AnnikaGommel = Annika Gommel /
-Valacor = Ron Brütsch /
+Valacor = Ron Brütsch 
