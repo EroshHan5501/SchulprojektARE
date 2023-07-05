@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using Pokedex.Common;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -19,6 +20,9 @@ namespace ApiCaller
             }
 
             using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
+
+            #region Moves
+            /*
             //Moves
             //Api request
             HttpClient clientProtoMove = new HttpClient();
@@ -39,8 +43,46 @@ namespace ApiCaller
                     transition.Insert(newMove);
                 }
             }
+            */
+            #endregion
 
-            //Pokemon && PokeMoves
+            #region Abilities
+            //Abilities
+            //Api request
+            HttpClient clientProtoAbility = new HttpClient();
+            using HttpResponseMessage responseProtoAbility = clientProtoAbility.GetAsync($"{apiString}ability?limit=358").Result;
+            string responseBodyProtoAbility = responseProtoAbility.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(responseBodyProtoAbility);
+            ProtoList protoAbilityList = JsonSerializer.Deserialize<ProtoList>(responseBodyProtoAbility);
+            if (protoAbilityList != null && protoAbilityList.results != null)
+            {
+                foreach (ProtoObject protoAbility in protoAbilityList.results)
+                {
+                    HttpClient newClient = new HttpClient();
+                    using HttpResponseMessage newResponse = newClient.GetAsync(protoAbility.url).Result;
+                    string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
+                    Pokedex.Common.Ability newAbility = JsonSerializer.Deserialize<Pokedex.Common.Ability>(newResponseBody);
+                    
+                    foreach (Ability.EffectGroup effectGroup in newAbility.effect_entries)
+                    {
+                        if (effectGroup.language.name == "en")
+                        {
+                            newAbility.entry = StringCleaner(effectGroup.effect);
+                            newAbility.shortEntry = StringCleaner(effectGroup.short_effect);
+                        }
+                    }
+                    Console.WriteLine(newAbility.id);
+                    Console.WriteLine(newAbility.name);
+                    Console.WriteLine(newAbility.entry);
+                    Console.WriteLine(newAbility.shortEntry);
+                    transition.Insert(newAbility);
+                }
+            }
+            #endregion
+
+            #region Pokemon
+            /*
+            //Pokemon && PokeMoves && PokeAbilities
             //Api request
             HttpClient client = new HttpClient();
             using HttpResponseMessage response = client.GetAsync($"{apiString}{input}?limit=1281").Result;
@@ -115,6 +157,8 @@ namespace ApiCaller
                 }
             }
             Console.WriteLine("***** ***** *****");
+            */
+            #endregion
 
         }
 
@@ -194,5 +238,17 @@ namespace ApiCaller
         //        public string? back_default { get; set; }
         //    }
         //}
+
+        public static string StringCleaner(string s)
+        {
+            if ((s.IndexOf('\'') >= 0))
+            {
+                return s.Remove(s.IndexOf('\''));
+            }
+            else
+            {
+                return s;
+            }
+        }
     }
 }
