@@ -1,13 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Pokemon API, Annika, Eren, Ron</title>
-    <meta charset="utf-8">
-       <meta name="viewport" content="width=device-width">
-    <link rel="apple-touch-icon-precomposed" href="media/LogoPokemon.png">
-    <link rel="icon" href="media/LogoPokemon.png">
-    <link rel="mask-icon" href="media/LogoPokemon.png" color="rgb(36,38,58)">
-    <link rel="shortcut icon" href="media/LogoPokemon.png">
+    <title>Pokemon API, Annika, Eren, Ron</title>    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="apple-touch-icon-precomposed" href="media/favicon.png">
+    <link rel="icon" href="media/favicon.png">
+    <link rel="mask-icon" href="media/favicon.svg" color="rgb(36,38,58)">
+    <link rel="shortcut icon" href="media/favicon.png">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="page page-onboarding preload">
@@ -39,14 +38,14 @@
                 <p class="paragraph" id="type">Type: </p>
                 <p class="paragraph" id="height">Height: </p>
                 <p class="paragraph">Attacks:</p>
-                <ul class="space-bottom">
-                    <li id="attacks">Feuerball</li>
+                <ul class="space-bottom" id="attacks">
+                    <li></li>
                 </ul>
             </div>
         </div>
         <div class="col-one-half featured-image" style="display: flex; justify-content: center; align-items: center;">
             <img src="media/Pokedex.png" class="img-fluid" id="image" style="position:relative;z-index: 2;"/>
-            <img src="media/Overviewtest.png" class="img-fluid detailimg"/>
+            <img src="media/Overviewtest.png" id="pokemonImage" class="img-fluid detailimg"/>
         </div>
         </div>
     </section>
@@ -54,14 +53,14 @@
         <h3>Basestads</h3>
         <table border="8" cellspacing="10" cellpadding="20" style="max-width: 1000px">
             <tr>
-                <th> Basic</th>
-                <th> Special</th>
-                <th> Extra</th>
+                <th>Basic</th>
+                <th>Special</th>
+                <th>Extra</th>
             </tr>
             <tr>
-                <td> Test 2</td>
-                <td> Test 2</td>
-                <td> Test 2</td>
+                <td id="basicstad"></td>
+                <td id="specialstad"></td>
+                <td id="extrastad"></td>
             </tr>
 
         </table>
@@ -69,14 +68,14 @@
         <h3>Attacks</h3>
         <table border="8" cellspacing="10" cellpadding="20" style="max-width: 1000px">
             <tr>
-                <th> Basic</th>
-                <th> Special</th>
-                <th> Extra</th>
+                <th>Basic</th>
+                <th>Special</th>
+                <th>Extra</th>
             </tr>
             <tr>
-                <td> Test 2</td>
-                <td> Test 2</td>
-                <td> Test 2</td>
+                <td id="basicattack"></td>
+                <td id="specialattack"></td>
+                <td id="extraattack"></td>
             </tr>
 
         </table>
