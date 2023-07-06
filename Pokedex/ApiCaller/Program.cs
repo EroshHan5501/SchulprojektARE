@@ -67,7 +67,9 @@ namespace ApiCaller
                     {
                         if (effectGroup.language.name == "en")
                         {
+                            //newAbility.entry = StringCleaner(effectGroup.effect);
                             newAbility.entry = StringCleaner(effectGroup.effect);
+                            //newAbility.shortEntry = StringCleaner(effectGroup.short_effect);
                             newAbility.shortEntry = StringCleaner(effectGroup.short_effect);
                         }
                     }
@@ -97,9 +99,9 @@ namespace ApiCaller
             ProtoList pokemonList = JsonSerializer.Deserialize<ProtoList>(responseBody);
 
             Console.WriteLine("***** ***** *****");
-            if (pokemonList!= null && pokemonList.results!= null)
+            if (pokemonList != null && pokemonList.results != null)
             {
-                foreach(ProtoObject pokemon in pokemonList.results) 
+                foreach (ProtoObject pokemon in pokemonList.results)
                 {
                     //Console.WriteLine(pokemon.name);
                     //Console.WriteLine(pokemon.url);
@@ -110,7 +112,7 @@ namespace ApiCaller
                     Pokedex.Common.Pokemon newPokemon = JsonSerializer.Deserialize<Pokedex.Common.Pokemon>(newResponseBody);
                     Sprite newSprites = new();
                     Console.WriteLine(newPokemon.Sprites.Front);
-                    newSprites.Front = newPokemon.Sprites.Front; 
+                    newSprites.Front = newPokemon.Sprites.Front;
                     newSprites.Back = newPokemon.Sprites.Back;
                     newSprites.FPokemonId = newPokemon.id;
                     Console.WriteLine();
@@ -179,7 +181,7 @@ namespace ApiCaller
                 }
             }
             Console.WriteLine("***** ***** *****");
-            
+
             #endregion
 
         }
@@ -265,7 +267,7 @@ namespace ApiCaller
         {
             if ((s.IndexOf('\'') >= 0))
             {
-                return s.Remove(s.IndexOf('\''));
+                return s.Replace('\'', ('`'));
             }
             else
             {
