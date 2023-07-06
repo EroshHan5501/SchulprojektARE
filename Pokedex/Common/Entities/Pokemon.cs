@@ -8,7 +8,7 @@ using Pokedx.Common;
 namespace Pokedex.Common;
 
 [Table("pokemon")]
-public class Pokemon
+public class Pokemon : IDatabaseRelatable
 {
     [Key]
     [Column("Id")]
@@ -64,28 +64,37 @@ public class Pokemon
         Moves = new List<Move>();
     }
 
-    public void GetRelatedEntities(string connectionString)
+    public void GetRelatedEntities()
     {
-        using DbTransition trans = new DbTransition();
+        using DbTransition trans1 = new DbTransition();
         QueryOptions option = new QueryOptions() {
             IncludeRelations = false
         };
 
-        Sprite? sprite = trans
-            .GetFromDatabase<Sprite>($"SELECT * FROM sprities WHERE FpokemonId={id}", option)
+        Sprite? sprite = trans1
+            .GetFromDatabase<Sprite>($"SELECT * FROM sprites WHERE FpokemonId={id}", option)
             .FirstOrDefault();
 
         if (sprite is not null) {
             Sprites = sprite;
         }
 
-        IEnumerable<Ability> abilis = trans
+        using DbTransition trans2 = new DbTransition();
+
+        IEnumerable<Ability> abilis = trans2
             .GetFromDatabase<Ability>($"SELECT * FROM abilities, pokeabilities WHERE abilities.Id=pokeabilities.AbilityId AND pokeabilities.PokeId={id}", option);
+
+
+        Console.WriteLine(abilis.Count());
 
         Abilities = abilis.ToList();
 
-        IEnumerable<Move> mov = trans
+        using DbTransition trans3 = new DbTransition();
+
+        IEnumerable<Move> mov = trans3
             .GetFromDatabase<Move>($"SELECT * FROM moves, pokemoves WHERE moves.Id=pokemoves.MoveId AND pokemoves.PokeId={id}", option);
+
+        Console.WriteLine(mov.Count());
 
         Moves = mov.ToList();
     }
