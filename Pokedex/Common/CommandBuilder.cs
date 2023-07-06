@@ -14,7 +14,7 @@ public class CommandBuilder
         Delete = 2
     };
 
-    public static string InsertCommand<T>(T entity) 
+    public static string InsertCommand<T>(T entity)
     {
         string tableName = GetTableName(typeof(T));
 
@@ -77,7 +77,7 @@ public class CommandBuilder
                 query.Append($" {property.Key}={property.Value}");
                 first = false;
             }
-            else 
+            else
             {
                 query.Append($", {property.Key}={property.Value}");
 
@@ -105,7 +105,7 @@ public class CommandBuilder
     }
 
     private static string GetTableName(Type type)
-    { 
+    {
         TableAttribute? tableAttr = (TableAttribute?)type.GetCustomAttribute(typeof(TableAttribute));
 
         if (tableAttr is null)
@@ -121,12 +121,12 @@ public class CommandBuilder
         IEnumerable<PropertyInfo> keyProperties = type
             .GetProperties()
             .Where(prop => prop.IsDefined(typeof(KeyAttribute), false));
-    
+
         if (keyProperties.Count() != 1)
         {
             throw new Exception("Key attribute has to be applied only once!");
         }
-        
+
         PropertyInfo keyProperty = keyProperties.First();
 
         string name = keyProperty.Name;
@@ -136,7 +136,7 @@ public class CommandBuilder
         {
             throw new Exception("Value of key can't be null");
         }
-        
+
         return new KeyValuePair<string, int>(name, (int)value);
     }
 
@@ -144,11 +144,12 @@ public class CommandBuilder
     {
         IEnumerable<PropertyInfo> columnProperties = type
             .GetProperties()
-            .Where(prop => prop.IsDefined(typeof(ColumnAttribute), false)); 
+            .Where(prop => prop.IsDefined(typeof(ColumnAttribute), false));
 
         foreach (PropertyInfo property in columnProperties)
         {
-            ColumnAttribute? attr = (ColumnAttribute?)property.GetCustomAttribute(typeof(ColumnAttribute)); 
+            ColumnAttribute? attr = (ColumnAttribute?)property.GetCustomAttribute(typeof(ColumnAttribute));
+
             if (attr is null)
             {
                 throw new Exception("Column attribute is not defined");
@@ -169,7 +170,7 @@ public class CommandBuilder
                 value = $"'{value}'";
             }
 
-            yield return new KeyValuePair<string, string> (name, value);
+            yield return new KeyValuePair<string, string>(name, value);
         }
     }
 }
