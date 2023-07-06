@@ -24,7 +24,19 @@ public class Pokemon : IDatabaseRelatable
     public int? height { get; set; }
     [Column("Weight")]
     public int? weight { get; set; }
-    //public List<AbilityGroup> Abilities { get; set; }
+    [JsonPropertyName("sprites")]
+    public Sprite Sprites { get; set; }
+    public List<AbilityGroup> abilities { get; set; }
+    public class AbilityGroup
+    {
+        public Ability ability { get; set; }
+    }
+    public class Ability
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
+
     //public List<StatGroup> Stats { get; set; }
     //public List<TypeGroup> Types { get; set; }
     public List<MoveGroup> moves { get; set; }
@@ -37,8 +49,6 @@ public class Pokemon : IDatabaseRelatable
         public string? name { get; set; }
         public string? url { get; set; }
     }
-    [JsonPropertyName("sprites")]
-    public Sprite Sprites { get; set; }
 
     [Relation("pokeAttack", RelationType.ManyToMany)]
     public List<Attack> Attacks { get; set; }

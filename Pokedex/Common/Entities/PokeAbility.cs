@@ -16,12 +16,12 @@ public class PokeAbility : IDatabaseMapable
     public int pokeId { get; set; }
 
     [Column("AbilityId")]
-    public int moveId { get; set; }
+    public int abilityId { get; set; }
 
     public void GetFrom(MySqlDataReader reader)
     {
         id = reader.GetInt32(0);
         pokeId = reader.GetInt32(1);
-        moveId = reader.GetInt32(2);
+        abilityId = reader.GetInt32(2);
     }
 }

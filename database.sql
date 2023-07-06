@@ -11,7 +11,14 @@ CREATE TABLE pokemon(
     Name VARCHAR(100),
     BaseExperience INTEGER,
     Height INTEGER,
-    Weight INTEGER
+    Weight INTEGER,
+    Type VARCHAR(20),
+    Hp INTEGER,
+    Attack INTEGER,
+    Defense INTEGER,
+    SpecialAttack INTEGER,
+    SpecialDefense INTEGER,
+    Speed INTEGER
 );
 
 CREATE TABLE moves(

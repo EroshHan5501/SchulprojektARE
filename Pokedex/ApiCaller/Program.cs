@@ -22,7 +22,7 @@ namespace ApiCaller
             using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
 
             #region Moves
-            /*
+            
             //Moves
             //Api request
             HttpClient clientProtoMove = new HttpClient();
@@ -43,7 +43,7 @@ namespace ApiCaller
                     transition.Insert(newMove);
                 }
             }
-            */
+            
             #endregion
 
             #region Abilities
@@ -81,7 +81,7 @@ namespace ApiCaller
             #endregion
 
             #region Pokemon
-            /*
+            
             //Pokemon && PokeMoves && PokeAbilities
             //Api request
             HttpClient client = new HttpClient();
@@ -134,8 +134,7 @@ namespace ApiCaller
                     transition.Insert(newPokemon);
                     if (newSprites != null && newSprites.Front != null && newSprites.Back != null && newSprites.FPokemonId != null)
                     {
-                    transition.Insert(newSprites);
-
+                        transition.Insert(newSprites);
                     }
 
                     foreach (Pokemon.MoveGroup moveGroup in newPokemon.moves)
@@ -154,10 +153,26 @@ namespace ApiCaller
                         pokeMove.moveId = moveId;
                         transition.Insert(pokeMove);
                     }
+                    foreach (Pokemon.AbilityGroup abilityGroup in newPokemon.abilities)
+                    {
+                        Console.WriteLine(abilityGroup.ability.url);
+                        Console.WriteLine(abilityGroup.ability.url.LastIndexOf("ability/"));
+                        Console.WriteLine(abilityGroup.ability.url.LastIndexOf('/'));
+                        int startPos = abilityGroup.ability.url.LastIndexOf("ability/") + 8;
+                        int endPos = abilityGroup.ability.url.LastIndexOf('/');
+                        int range = endPos - startPos;
+                        Console.WriteLine(abilityGroup.ability.url.Substring(startPos, range));
+                        int abilityId = Convert.ToInt32(abilityGroup.ability.url.Substring(startPos, range));
+
+                        PokeAbility pokeAbility = new PokeAbility();
+                        pokeAbility.pokeId = newPokemon.id;
+                        pokeAbility.abilityId = abilityId;
+                        transition.Insert(pokeAbility);
+                    }
                 }
             }
             Console.WriteLine("***** ***** *****");
-            */
+            
             #endregion
 
         }
