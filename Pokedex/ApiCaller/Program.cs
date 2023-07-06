@@ -22,7 +22,7 @@ namespace ApiCaller
             using Pokedex.Common.DbTransition transition = new Pokedex.Common.DbTransition();
 
             #region Moves
-            
+
             //Moves
             //Api request
             HttpClient clientProtoMove = new HttpClient();
@@ -43,7 +43,7 @@ namespace ApiCaller
                     transition.Insert(newMove);
                 }
             }
-            
+
             #endregion
 
             #region Abilities
@@ -62,7 +62,7 @@ namespace ApiCaller
                     using HttpResponseMessage newResponse = newClient.GetAsync(protoAbility.url).Result;
                     string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
                     Pokedex.Common.Ability newAbility = JsonSerializer.Deserialize<Pokedex.Common.Ability>(newResponseBody);
-                    
+
                     foreach (Ability.EffectGroup effectGroup in newAbility.effect_entries)
                     {
                         if (effectGroup.language.name == "en")
@@ -81,7 +81,7 @@ namespace ApiCaller
             #endregion
 
             #region Pokemon
-            
+
             //Pokemon && PokeMoves && PokeAbilities
             //Api request
             HttpClient client = new HttpClient();
@@ -126,6 +126,13 @@ namespace ApiCaller
                     //Console.WriteLine(newPokemon.moves[0].move.name);
                     Console.WriteLine("***** ***** *****");
                     Console.WriteLine();
+                    newPokemon.type = newPokemon.types[0].type.name;
+                    newPokemon.hp = newPokemon.stats[0].base_stat;
+                    newPokemon.attack = newPokemon.stats[1].base_stat;
+                    newPokemon.defense = newPokemon.stats[2].base_stat;
+                    newPokemon.specialAttack = newPokemon.stats[3].base_stat;
+                    newPokemon.specialDefense = newPokemon.stats[4].base_stat;
+                    newPokemon.speed = newPokemon.stats[5].base_stat;
 
                     //if (newPokemon.id == 899)
                     //{

@@ -22,10 +22,39 @@ public class Pokemon : IDatabaseRelatable
     public int? base_experience { get; set; }
     [Column("Height")]
     public int? height { get; set; }
+    [Column("Type")]
+    public string? type { get; set; }
     [Column("Weight")]
     public int? weight { get; set; }
+    [Column("Hp")]
+    public int? hp { get; set; }
+    [Column("Attack")]
+    public int? attack { get; set; }
+    [Column("Defense")]
+    public int? defense { get; set; }
+    [Column("SpecialAttack")]
+    public int? specialAttack { get; set; }
+    [Column("SpecialDefense")]
+    public int? specialDefense { get; set; }
+    [Column("Speed")]
+    public int? speed { get; set; }
+
+
     [JsonPropertyName("sprites")]
     public Sprite Sprites { get; set; }
+    public List<TypeGroup> types { get; set; }
+    public class TypeGroup
+    {
+        public int? slot { get; set; }
+        public Type type { get; set; }
+    }
+
+    public class Type
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
+
     public List<AbilityGroup> abilities { get; set; }
     public class AbilityGroup
     {
@@ -37,7 +66,20 @@ public class Pokemon : IDatabaseRelatable
         public string? url { get; set; }
     }
 
-    //public List<StatGroup> Stats { get; set; }
+    public List<StatGroup> stats { get; set; }
+    public class StatGroup
+    {
+        public Stat stat { get; set; }
+        public int base_stat { get; set; }
+        public int effort { get; set; }
+    }
+
+    public class Stat
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
+
     //public List<TypeGroup> Types { get; set; }
     public List<MoveGroup> moves { get; set; }
     public class MoveGroup
