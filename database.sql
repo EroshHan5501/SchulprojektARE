@@ -7,28 +7,48 @@ CREATE DATABASE pokedex;
 USE pokedex;
 
 CREATE TABLE pokemon(
-    pokemonId INTEGER PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    height INTEGER NOT NULL,
-    isDefault BOOLEAN NOT NULL,
-    baseExperience INTEGER NOT NULL
+    Id INTEGER PRIMARY KEY,
+    Name VARCHAR(100),
+    BaseExperience INTEGER,
+    Height INTEGER,
+    Weight INTEGER,
+    Type VARCHAR(20),
+    Hp INTEGER,
+    Attack INTEGER,
+    Defense INTEGER,
+    SpecialAttack INTEGER,
+    SpecialDefense INTEGER,
+    Speed INTEGER
 );
 
-CREATE TABLE attack(
-    attackId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    url TEXT NOT NULL UNIQUE
+CREATE TABLE moves(
+    Id INTEGER PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE pokeattack(
-    pokeattackId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    fpokemonId INTEGER REFERENCES pokemon(pokemonId),
-    fattackId INTEGER REFERENCES attack(attackId)
+CREATE TABLE pokemoves(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    PokeId INTEGER REFERENCES pokemon(Id),
+    MoveId INTEGER REFERENCES moves(Id)
 );
 
-CREATE TABLE image(
-    imageId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    url TEXT NOT NULL UNIQUE,
-    fpokemonId INTEGER REFERENCES pokemon(pokemonId) 
+CREATE TABLE abilities(
+    Id INTEGER PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL UNIQUE,
+    Entry VARCHAR(2000),
+    ShortEntry VARCHAR(1000)
+);
+
+CREATE TABLE pokeabilities(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    PokeId INTEGER REFERENCES pokemon(Id),
+    AbilityId INTEGER REFERENCES abilities(Id)
+);
+
+CREATE TABLE sprites(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Front TEXT UNIQUE,
+    Back TEXT UNIQUE,
+    FpokemonId INTEGER REFERENCES pokemon(Id) 
 );
 

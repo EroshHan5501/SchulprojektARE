@@ -115,6 +115,7 @@ public class DbTransition : IDisposable
         ResetConnection();
         string query = CommandBuilder.InsertCommand(entity);
 
+        Console.WriteLine(query);
         MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();

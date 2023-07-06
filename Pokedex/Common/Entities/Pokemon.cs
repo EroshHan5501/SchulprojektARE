@@ -1,6 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using MySqlConnector;
 using Pokedx.Common;
 
@@ -10,20 +11,86 @@ namespace Pokedex.Common;
 public class Pokemon : IDatabaseRelatable
 {
     [Key]
-    [Column("pokemonId")]
-    public int PokemonId { get; set; }
+    [Column("Id")]
+    public int id { get; set; }
+    [Column("Name")]
+    public string? name { get; set; }
+    //[Column("Url")]
+    //public string? url { get; set; }
+    [Column("BaseExperience")]
+    [JsonPropertyName("base_experience")]
+    public int? base_experience { get; set; }
+    [Column("Height")]
+    public int? height { get; set; }
+    [Column("Type")]
+    public string? type { get; set; }
+    [Column("Weight")]
+    public int? weight { get; set; }
+    [Column("Hp")]
+    public int? hp { get; set; }
+    [Column("Attack")]
+    public int? attack { get; set; }
+    [Column("Defense")]
+    public int? defense { get; set; }
+    [Column("SpecialAttack")]
+    public int? specialAttack { get; set; }
+    [Column("SpecialDefense")]
+    public int? specialDefense { get; set; }
+    [Column("Speed")]
+    public int? speed { get; set; }
 
-    [Column("name")]
-    public string Name { get; set; }
 
-    [Column("height")]
-    public int Height { get; set; }
+    [JsonPropertyName("sprites")]
+    public Sprite Sprites { get; set; }
+    public List<TypeGroup> types { get; set; }
+    public class TypeGroup
+    {
+        public int? slot { get; set; }
+        public Type type { get; set; }
+    }
 
-    [Column("isDefault")]
-    public bool IsDefault { get; set; }
+    public class Type
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
 
-    [Column("baseExperience")]
-    public int BaseExperience { get; set; }
+    public List<AbilityGroup> abilities { get; set; }
+    public class AbilityGroup
+    {
+        public Ability ability { get; set; }
+    }
+    public class Ability
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
+
+    public List<StatGroup> stats { get; set; }
+    public class StatGroup
+    {
+        public Stat stat { get; set; }
+        public int base_stat { get; set; }
+        public int effort { get; set; }
+    }
+
+    public class Stat
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
+
+    //public List<TypeGroup> Types { get; set; }
+    public List<MoveGroup> moves { get; set; }
+    public class MoveGroup
+    {
+        public Move move { get; set; }
+    }
+    public class Move
+    {
+        public string? name { get; set; }
+        public string? url { get; set; }
+    }
 
     [Relation("pokeAttack", RelationType.ManyToMany)]
     public List<Attack> Attacks { get; set; }
@@ -42,15 +109,15 @@ public class Pokemon : IDatabaseRelatable
         using DbTransition trans1 = new DbTransition();
 
         IEnumerable<Attack> result1 = trans1.GetFromDatabase<Attack>(
-            $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={PokemonId}",
-            new QueryOptions() { IncludeRelations = false });
+            $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={id}", 
+            new QueryOptions() { IncludeRelations = false});
 
         Attacks = result1.ToList();
 
         using DbTransition trans2 = new DbTransition();
 
-        IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={PokemonId}",
-        new QueryOptions() { IncludeRelations = false });
+        IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={id}", 
+        new QueryOptions() { IncludeRelations = false});
 
         Images = result2.ToList();
     }
