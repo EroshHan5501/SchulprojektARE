@@ -84,17 +84,12 @@ public class Pokemon : IDatabaseRelatable
         IEnumerable<Ability> abilis = trans2
             .GetFromDatabase<Ability>($"SELECT * FROM abilities, pokeabilities WHERE abilities.Id=pokeabilities.AbilityId AND pokeabilities.PokeId={id}", option);
 
-
-        Console.WriteLine(abilis.Count());
-
         Abilities = abilis.ToList();
 
         using DbTransition trans3 = new DbTransition();
 
         IEnumerable<Move> mov = trans3
             .GetFromDatabase<Move>($"SELECT * FROM moves, pokemoves WHERE moves.Id=pokemoves.MoveId AND pokemoves.PokeId={id}", option);
-
-        Console.WriteLine(mov.Count());
 
         Moves = mov.ToList();
     }
