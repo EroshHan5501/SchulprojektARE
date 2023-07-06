@@ -102,7 +102,17 @@ public class DbTransition : IDisposable
                     continue;
                 }
 
-                property.SetValue(entity, columnValue);
+
+                if (columnValue.GetType() == typeof(DBNull))
+                {
+                    property.SetValue(entity, null);
+
+                }
+                else
+                {
+                    property.SetValue(entity, columnValue);
+                }
+
                 break;
             }
         }
