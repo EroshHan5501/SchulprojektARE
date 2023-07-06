@@ -5,16 +5,16 @@ using MySqlConnector;
 
 namespace Pokedex.Common;
 
-[Table("moves")]
-public class Move
+[Table("pokemoves")]
+public class PokeMove
 {
     [Key]
     [Column("Id")]
     public int id { get; set; }
 
-    [Column("Name")]
-    public string name { get; set; }
+    [Column("PokeId")]
+    public int pokeId { get; set; }
 
-    //Power???
-    //Accuracy
+    [Column("MoveId")]
+    public int moveId { get; set; }
 }
