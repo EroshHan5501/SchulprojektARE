@@ -146,7 +146,7 @@ namespace ApiCaller
                         transition.Insert(newSprites);
                     }
 
-                    foreach (Pokemon.MoveGroup moveGroup in newPokemon.moves)
+                    foreach (MoveGroup moveGroup in newPokemon.moves)
                     {
                         Console.WriteLine(moveGroup.move.url);
                         Console.WriteLine(moveGroup.move.url.LastIndexOf("move/"));
@@ -162,7 +162,7 @@ namespace ApiCaller
                         pokeMove.moveId = moveId;
                         transition.Insert(pokeMove);
                     }
-                    foreach (Pokemon.AbilityGroup abilityGroup in newPokemon.abilities)
+                    foreach (AbilityGroup abilityGroup in newPokemon.abilities)
                     {
                         Console.WriteLine(abilityGroup.ability.url);
                         Console.WriteLine(abilityGroup.ability.url.LastIndexOf("ability/"));

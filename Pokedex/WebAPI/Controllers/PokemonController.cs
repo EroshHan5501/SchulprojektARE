@@ -15,13 +15,14 @@ public sealed class PokemonController : ControllerBase {
     } 
 
     [HttpGet]
-    public IActionResult GetOverview() {
+    public IActionResult GetOverview([FromQuery] int pageNumber, [FromQuery] int pageSize) {
         
         using DbTransition transition = new DbTransition();
 
+
         IEnumerable<Pokemon> pokemons = transition
             .GetFromDatabase<Pokemon>(
-                "SELECT * FROM pokemon", 
+                $"SELECT * FROM pokemon LIMIT {(pageNumber - 1) * pageSize}, {pageSize}", 
                 new QueryOptions() { IncludeRelations = true});
 
         return Ok(pokemons);
@@ -32,7 +33,7 @@ public sealed class PokemonController : ControllerBase {
 
         using DbTransition transition = new DbTransition();
 
-        string query = $"SELECT * FROM pokemon WHERE pokemonId={pokemonId}";
+        string query = $"SELECT * FROM pokemon WHERE Id={pokemonId}";
 
         Pokemon? pokemon = transition
             .GetFromDatabase<Pokemon>(
