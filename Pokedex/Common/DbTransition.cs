@@ -26,7 +26,7 @@ public class DbTransition : IDisposable {
     }
 
     public IEnumerable<T> GetFromDatabase<T>(string query, QueryOptions options) 
-        where T : IDatabaseMapable, new()
+        where T : new()
     {
         ResetConnection();
 
@@ -44,15 +44,13 @@ public class DbTransition : IDisposable {
     }
 
     private IEnumerable<T> MapInternal<T>(MySqlDataReader reader, QueryOptions options) 
-        where T : IDatabaseMapable, new()
+        where T : new()
     {
         List<T> entities = new List<T>();
 
         while(reader.Read()) {
 
             T entity = new T();
-
-            entity.GetFrom(reader); 
 
             entities.Add(entity);
         }

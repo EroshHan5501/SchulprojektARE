@@ -8,7 +8,7 @@ using Pokedx.Common;
 namespace Pokedex.Common;
 
 [Table("pokemon")]
-public class Pokemon : IDatabaseRelatable
+public class Pokemon
 {
     [Key]
     [Column("Id")]

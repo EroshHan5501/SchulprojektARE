@@ -6,7 +6,7 @@ using MySqlConnector;
 namespace Pokedex.Common;
 
 [Table("sprites")]
-public class Sprite : IDatabaseMapable
+public class Sprite
 {
     [Key]
     [Column("Id")]
