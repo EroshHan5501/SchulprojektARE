@@ -33,7 +33,7 @@ public sealed class PokemonController : ControllerBase {
 
         using DbTransition transition = new DbTransition();
 
-        string query = $"SELECT * FROM pokemon WHERE pokemonId={pokemonId}";
+        string query = $"SELECT * FROM pokemon WHERE Id={pokemonId}";
 
         Pokemon? pokemon = transition
             .GetFromDatabase<Pokemon>(
