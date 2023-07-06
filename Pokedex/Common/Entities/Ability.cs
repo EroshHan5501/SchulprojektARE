@@ -6,7 +6,7 @@ using MySqlConnector;
 namespace Pokedex.Common;
 
 [Table("abilities")]
-public class Ability : IDatabaseMapable
+public class Ability
 {
     [Key]
     [Column("Id")]
@@ -32,11 +32,5 @@ public class Ability : IDatabaseMapable
     public class Language
     {
         public string name { get; set; }
-    }
-
-    public void GetFrom(MySqlDataReader reader)
-    {
-        id = reader.GetInt32(0);
-        name = reader.GetString(1);
     }
 }

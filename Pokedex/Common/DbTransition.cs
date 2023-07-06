@@ -69,7 +69,7 @@ public class DbTransition : IDisposable
             {
                 IDatabaseRelatable relatable = (IDatabaseRelatable)entity;
 
-                relatable.GetRelatedEntities(ConnectionString);
+                relatable.GetRelatedEntities();
             }
         }
 

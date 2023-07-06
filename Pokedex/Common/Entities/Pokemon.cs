@@ -8,7 +8,7 @@ using Pokedx.Common;
 namespace Pokedex.Common;
 
 [Table("pokemon")]
-public class Pokemon : IDatabaseRelatable
+public class Pokemon
 {
     [Key]
     [Column("Id")]
@@ -39,86 +39,54 @@ public class Pokemon : IDatabaseRelatable
     [Column("Speed")]
     public int? speed { get; set; }
 
-
+    // API-Caller
     [JsonPropertyName("sprites")]
     public Sprite Sprites { get; set; }
     public List<TypeGroup> types { get; set; }
-    public class TypeGroup
-    {
-        public int? slot { get; set; }
-        public Type type { get; set; }
-    }
-
-    public class Type
-    {
-        public string? name { get; set; }
-        public string? url { get; set; }
-    }
 
     public List<AbilityGroup> abilities { get; set; }
-    public class AbilityGroup
-    {
-        public Ability ability { get; set; }
-    }
-    public class Ability
-    {
-        public string? name { get; set; }
-        public string? url { get; set; }
-    }
 
     public List<StatGroup> stats { get; set; }
-    public class StatGroup
-    {
-        public Stat stat { get; set; }
-        public int base_stat { get; set; }
-        public int effort { get; set; }
-    }
-
-    public class Stat
-    {
-        public string? name { get; set; }
-        public string? url { get; set; }
-    }
 
     //public List<TypeGroup> Types { get; set; }
     public List<MoveGroup> moves { get; set; }
-    public class MoveGroup
-    {
-        public Move move { get; set; }
-    }
-    public class Move
-    {
-        public string? name { get; set; }
-        public string? url { get; set; }
-    }
 
-    [Relation("pokeAttack", RelationType.ManyToMany)]
-    public List<Attack> Attacks { get; set; }
+    // Web-API
+    [JsonPropertyName("abilis")]
+    public List<Ability> Abilities { get; set; }
 
-    [Relation("image", RelationType.OneToMany)]
-    public List<Image> Images { get; set; }
+    [JsonPropertyName("movement")]
+    public List<Move> Moves { get; set; }
 
     public Pokemon()
     {
-        Attacks = new List<Attack>();
-        Images = new List<Image>();
+        Abilities = new List<Ability>();
+        Moves = new List<Move>();
     }
 
     public void GetRelatedEntities(string connectionString)
     {
-        using DbTransition trans1 = new DbTransition();
+        using DbTransition trans = new DbTransition();
+        QueryOptions option = new QueryOptions() {
+            IncludeRelations = false
+        };
 
-        IEnumerable<Attack> result1 = trans1.GetFromDatabase<Attack>(
-            $"SELECT attackId, name, url FROM attack, pokeattack WHERE attack.attackId=pokeattack.fattackId AND pokeattack.fpokemonId={id}", 
-            new QueryOptions() { IncludeRelations = false});
+        Sprite? sprite = trans
+            .GetFromDatabase<Sprite>($"SELECT * FROM sprities WHERE FpokemonId={id}", option)
+            .FirstOrDefault();
 
-        Attacks = result1.ToList();
+        if (sprite is not null) {
+            Sprites = sprite;
+        }
 
-        using DbTransition trans2 = new DbTransition();
+        IEnumerable<Ability> abilis = trans
+            .GetFromDatabase<Ability>($"SELECT * FROM abilities, pokeabilities WHERE abilities.Id=pokeabilities.AbilityId AND pokeabilities.PokeId={id}", option);
 
-        IEnumerable<Image> result2 = trans2.GetFromDatabase<Image>($"SELECT imageId, url FROM image WHERE fpokemonId={id}", 
-        new QueryOptions() { IncludeRelations = false});
+        Abilities = abilis.ToList();
 
-        Images = result2.ToList();
+        IEnumerable<Move> mov = trans
+            .GetFromDatabase<Move>($"SELECT * FROM moves, pokemoves WHERE moves.Id=pokemoves.MoveId AND pokemoves.PokeId={id}", option);
+
+        Moves = mov.ToList();
     }
 }
