@@ -11,9 +11,10 @@ namespace ApiCaller
     {
         static void Main(string[] args)
         {
-            //CLI input
-            string input = String.Empty;
             string apiString = "https://pokeapi.co/api/v2/";
+
+            //CLI Flag (Obsolete but remains for Demo Purposes
+            string input = String.Empty;
             if (args.Length > 0)
             {
                 input = args[0];
