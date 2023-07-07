@@ -10,6 +10,6 @@ https://pokeapi.co/
 Database Hoster: https://remotemysql.com/
 
 ## User
-EroshHan5501 = Eren Üzer /
+EroshHan5501/erenuezer = Eren Üzer /
 AnnikaGommel = Annika Gommel /
 Valacor = Ron Brütsch 
