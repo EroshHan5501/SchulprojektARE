@@ -7,18 +7,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Access specific parameter values
     const id = url.searchParams.get('pokemonId');
     const response = await fetch(`https://localhost:7212/api/Pokemon/detail/${id}`);
-
-    document.getElementById("kp").innerText(response.kp);
-    document.getElementById("number").innerText(response.number);
-    document.getElementById("type").innerText(response.type);
-    document.getElementById("height").innerText(response.height);
-    document.getElementById("pokemonImage").innerText(response.pokemonImage);
-    document.getElementById("basicstad").innerText(response.basicstad);
-    document.getElementById("specialstad").innerText(response.specialstad);
-    document.getElementById("extrastad").innerText(response.extrastad);
+    const json = await response.json();
+    document.getElementById("kp").innerText(json.kp);
+    document.getElementById("number").innerText(json.number);
+    document.getElementById("type").innerText(json.type);
+    document.getElementById("height").innerText(json.height);
+    document.getElementById("pokemonImage").innerText(json.pokemonImage);
+    document.getElementById("basicstad").innerText(json.basicstad);
+    document.getElementById("specialstad").innerText(json.specialstad);
+    document.getElementById("extrastad").innerText(json.extrastad);
 
     let attacks = document.getElementById("attacks")
-    for(let attack in response.attacks) {
+    for(let attack in json.attacks) {
         let newAttack = document.createElement('li');
         newAttack.innerText = attack;
         attacks.appendChild(newAttack)

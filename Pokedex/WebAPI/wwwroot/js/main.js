@@ -1,9 +1,13 @@
 'use strict';
 
 // Remove preload class once page is fully loaded
-
+console.log('js loaded...')
 document.addEventListener("DOMContentLoaded", async () => {
-    const json = await fetch("https://localhost:7212/api/Pokemon/");
+    const response = await fetch("https://localhost:7212/api/Pokemon/");
+    const json = await response.json();
+	console.log('JSON HIER');
+	console.log(json);
+	console.log(json);
     const template = document.querySelector("#card");
     const container = document.querySelector("#container");
 

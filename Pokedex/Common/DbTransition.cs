@@ -9,7 +9,7 @@ namespace Pokedex.Common;
 
 public class DbTransition : IDisposable
 {
-    private static string ConnectionString => "server=localhost;uid=poketrainer;password=password123;database=pokedex";
+    private static string ConnectionString => "server=localhost;port=3307;uid=poketrainer;password=password123;database=pokedex";
 
     private MySqlConnection DbConnection { get; set; }
 
