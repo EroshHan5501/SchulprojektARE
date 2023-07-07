@@ -67,9 +67,7 @@ namespace ApiCaller
                     {
                         if (effectGroup.language.name == "en")
                         {
-                            //newAbility.entry = StringCleaner(effectGroup.effect);
                             newAbility.entry = StringCleaner(effectGroup.effect);
-                            //newAbility.shortEntry = StringCleaner(effectGroup.short_effect);
                             newAbility.shortEntry = StringCleaner(effectGroup.short_effect);
                         }
                     }
@@ -87,9 +85,7 @@ namespace ApiCaller
             //Pokemon && PokeMoves && PokeAbilities
             //Api request
             HttpClient client = new HttpClient();
-            using HttpResponseMessage response = client.GetAsync($"{apiString}{input}?limit=1281").Result;
-            //using HttpResponseMessage response = client.GetAsync($"{apiString}{input}?limit=20&offset=898").Result;
-            //using HttpResponseMessage response = client.GetAsync($"{apiString}pokemon/899").Result;
+            using HttpResponseMessage response = client.GetAsync($"{apiString}pokemon?limit=1281").Result;
             string responseBody = response.Content.ReadAsStringAsync().Result;
             Console.WriteLine(responseBody);
 
@@ -103,9 +99,6 @@ namespace ApiCaller
             {
                 foreach (ProtoObject pokemon in pokemonList.results)
                 {
-                    //Console.WriteLine(pokemon.name);
-                    //Console.WriteLine(pokemon.url);
-
                     HttpClient newClient = new HttpClient();
                     using HttpResponseMessage newResponse = newClient.GetAsync(pokemon.url).Result;
                     string newResponseBody = newResponse.Content.ReadAsStringAsync().Result;
@@ -116,16 +109,12 @@ namespace ApiCaller
                     newSprites.Back = newPokemon.Sprites.Back;
                     newSprites.FPokemonId = newPokemon.id;
                     Console.WriteLine();
+                    Console.WriteLine("***** ***** *****");
                     Console.WriteLine(newSprites.Front);
                     Console.WriteLine(newSprites.Back);
-                    Console.WriteLine("***** ***** *****");
                     Console.WriteLine(newPokemon.name);
-                    //Console.WriteLine(newPokemon.url);
                     Console.WriteLine(newPokemon.height);
                     Console.WriteLine(newPokemon.base_experience);
-                    //Console.WriteLine(newPokemon.types[0].type.name);
-                    //Console.WriteLine(newPokemon.sprites.front_default);
-                    //Console.WriteLine(newPokemon.moves[0].move.name);
                     Console.WriteLine("***** ***** *****");
                     Console.WriteLine();
                     newPokemon.type = newPokemon.types[0].type.name;
@@ -136,11 +125,8 @@ namespace ApiCaller
                     newPokemon.specialDefense = newPokemon.stats[4].base_stat;
                     newPokemon.speed = newPokemon.stats[5].base_stat;
 
-                    //if (newPokemon.id == 899)
-                    //{
-                    //    Debugger.Launch();
-                    //}
                     transition.Insert(newPokemon);
+
                     if (newSprites != null && newSprites.Front != null && newSprites.Back != null && newSprites.FPokemonId != null)
                     {
                         transition.Insert(newSprites);
@@ -197,71 +183,6 @@ namespace ApiCaller
             public string? name { get; set; }
             public string? url { get; set; }
         }
-
-        //public class Pokemon
-        //{
-        //    public int? id { get; set; }
-        //    public string? name { get; set; }
-        //    public string? url { get; set; }
-        //    [JsonPropertyName("Base_experience")]
-        //    public int? BaseExperience { get; set; }
-        //    public int? height { get; set; }
-        //    public int? weight { get; set; }
-        //    public List<AbilityGroup> abilities { get; set; }
-        //    public List<StatGroup> stats { get; set; }
-        //    public List<TypeGroup> types { get; set; }
-        //    public List<MoveGroup> moves { get; set; }
-        //    public Sprites sprites { get; set; }
-
-        //    public class AbilityGroup
-        //    {
-        //        Ability ability { get; set; }
-        //    }
-        //    public class Ability
-        //    {
-        //        public string? name { get; set; }
-        //        public string? url { get; set; }
-        //    }
-
-        //    public class StatGroup
-        //    {
-        //        public int? base_stat { get; set; }
-        //        public int? effort { get; set; }
-        //        public Stat stat { get; set; }
-        //    }
-        //    public class Stat
-        //    {
-        //        public string? name { get; set; }
-        //        public string? url { get; set; }
-        //    }
-
-        //    public class TypeGroup
-        //    {
-        //        public int? slot { get; set; }
-        //        public Type type { get; set; }
-        //    }
-        //    public class Type
-        //    {
-        //        public string? name { get; set; }
-        //        public string? url { get; set; }
-        //    }
-
-        //    public class MoveGroup
-        //    {
-        //        public Move move { get; set; }
-        //    }
-        //    public class Move
-        //    {
-        //        public string? name { get; set; }
-        //        public string? url { get; set; }
-        //    }
-
-        //    public class Sprites
-        //    {
-        //        public string? front_default { get; set; }
-        //        public string? back_default { get; set; }
-        //    }
-        //}
 
         public static string StringCleaner(string s)
         {

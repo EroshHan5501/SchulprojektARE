@@ -15,6 +15,7 @@ public class Move
     [Column("Name")]
     public string name { get; set; }
 
+    //Potential Addition:
     //Power???
     //Accuracy
 }

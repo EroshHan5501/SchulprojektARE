@@ -15,8 +15,6 @@ public class Pokemon : IDatabaseRelatable
     public int id { get; set; }
     [Column("Name")]
     public string? name { get; set; }
-    //[Column("Url")]
-    //public string? url { get; set; }
     [Column("BaseExperience")]
     [JsonPropertyName("base_experience")]
     public int? base_experience { get; set; }
