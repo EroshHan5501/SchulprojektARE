@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("number").innerText("Nummer: "+json.id);
     document.getElementById("type").innerText("Typ: " + json.type);
     document.getElementById("height").innerText("Größe: " + json.height);
-    document.getElementById("pokemonImage").setAttribute("src", json.pokemonImage);
+    document.getElementById("pokemonImage").setAttribute("src", json.sprites.front_default);
 
     document.getElementById("kp").innerText(json.hp);
     document.getElementById("attackstat").innerText(json.hp);
