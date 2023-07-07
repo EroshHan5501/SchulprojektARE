@@ -31,7 +31,6 @@
                  style="height: 600px;justify-content: center;display: flex;flex-direction: column;">
                 <div style="display: flex">
                     <h1 id="name" style="color:#C12026;">Name</h1>
-                    <p class="paragraph" id="kp">100</p>
                 </div>
                 <p class="paragraph" id="number">Nummer: </p>
 
@@ -39,7 +38,10 @@
                 <p class="paragraph" id="height">Height: </p>
                 <p class="paragraph">Attacks:</p>
                 <ul class="space-bottom" id="attacks">
-                    <li></li>
+                </ul>
+                <p class="paragraph">Abilites:</p>
+                <ul class="space-bottom" id="abilities">
+                   
                 </ul>
             </div>
         </div>
@@ -47,38 +49,29 @@
             <img src="media/Pokedex.png" class="img-fluid" id="image" style="position:relative;z-index: 2;"/>
             <img src="media/Overviewtest.png" id="pokemonImage" class="img-fluid detailimg"/>
         </div>
-        </div>
     </section>
     <section style="margin-left: 100px">
-        <h3>Basestads</h3>
+        <h3>Basestats</h3>
         <table border="8" cellspacing="10" cellpadding="20" style="max-width: 1000px">
             <tr>
-                <th>Basic</th>
-                <th>Special</th>
-                <th>Extra</th>
+                <th>HP</th>
+                <th>Angriff</th>
+                <th>Verteidigung</th>
+                <th>Spezialangriff</th>
+                <th>Spezialverteidigung</th>
+                <th>Geschwindigkeit</th>
             </tr>
             <tr>
-                <td id="basicstad"></td>
-                <td id="specialstad"></td>
-                <td id="extrastad"></td>
+                <td id="kp"></td>
+                <td id="attackstat"></td>
+                <td id="defstat"></td>
+                <td id="spattackstat"></td>
+                <td id="spdefstat"></td>
+                <td id="speedstat"></td>
             </tr>
 
         </table>
-        <br/><br/>
-        <h3>Attacks</h3>
-        <table border="8" cellspacing="10" cellpadding="20" style="max-width: 1000px">
-            <tr>
-                <th>Basic</th>
-                <th>Special</th>
-                <th>Extra</th>
-            </tr>
-            <tr>
-                <td id="basicattack"></td>
-                <td id="specialattack"></td>
-                <td id="extraattack"></td>
-            </tr>
-
-        </table>
+        
     </section>
 
 </main>
