@@ -27,7 +27,7 @@ namespace ApiCaller
             //Moves
             //Api request
             HttpClient clientProtoMove = new HttpClient();
-            using HttpResponseMessage responseProtoMove = clientProtoMove.GetAsync($"{apiString}move?limit=20").Result;
+            using HttpResponseMessage responseProtoMove = clientProtoMove.GetAsync($"{apiString}move?limit=918").Result;
             string responseBodyProtoMove = responseProtoMove.Content.ReadAsStringAsync().Result;
             //Console.WriteLine(responseBodyProtoMove);
             ProtoList protoMoveList = JsonSerializer.Deserialize<ProtoList>(responseBodyProtoMove);
@@ -43,7 +43,7 @@ namespace ApiCaller
                     Console.WriteLine(newMove.id);
                     Console.WriteLine(newMove.name);
                     Console.WriteLine();
-                    //transition.Insert(newMove);
+                    transition.Insert(newMove);
                 }
             }
 
@@ -53,7 +53,7 @@ namespace ApiCaller
             //Abilities
             //Api request
             HttpClient clientProtoAbility = new HttpClient();
-            using HttpResponseMessage responseProtoAbility = clientProtoAbility.GetAsync($"{apiString}ability?limit=20").Result;
+            using HttpResponseMessage responseProtoAbility = clientProtoAbility.GetAsync($"{apiString}ability?limit=358").Result;
             string responseBodyProtoAbility = responseProtoAbility.Content.ReadAsStringAsync().Result;
             //Console.WriteLine(responseBodyProtoAbility);
             ProtoList protoAbilityList = JsonSerializer.Deserialize<ProtoList>(responseBodyProtoAbility);
@@ -80,7 +80,7 @@ namespace ApiCaller
                     Console.WriteLine();
                     //Console.WriteLine(newAbility.entry);
                     //Console.WriteLine(newAbility.shortEntry);
-                    //transition.Insert(newAbility);
+                    transition.Insert(newAbility);
                 }
             }
             #endregion
@@ -90,7 +90,7 @@ namespace ApiCaller
             //Pokemon && PokeMoves && PokeAbilities
             //Api request
             HttpClient client = new HttpClient();
-            using HttpResponseMessage response = client.GetAsync($"{apiString}pokemon?limit=20").Result;
+            using HttpResponseMessage response = client.GetAsync($"{apiString}pokemon?limit=1281").Result;
             string responseBody = response.Content.ReadAsStringAsync().Result;
             //Console.WriteLine(responseBody);
 
@@ -127,11 +127,11 @@ namespace ApiCaller
                     newPokemon.specialDefense = newPokemon.stats[4].base_stat;
                     newPokemon.speed = newPokemon.stats[5].base_stat;
 
-                    //transition.Insert(newPokemon);
+                    transition.Insert(newPokemon);
 
                     if (newSprites != null && newSprites.Front != null && newSprites.Back != null && newSprites.FPokemonId != null)
                     {
-                        //transition.Insert(newSprites);
+                        transition.Insert(newSprites);
                     }
 
                     foreach (MoveGroup moveGroup in newPokemon.moves)
@@ -149,8 +149,11 @@ namespace ApiCaller
                         pokeMove.pokeId = newPokemon.id;
                         pokeMove.moveId = moveId;
                         Console.WriteLine("Writing PokeMove...");
+                        Console.WriteLine(pokeMove.id);
+                        Console.Write("" + pokeMove.pokeId);
+                        Console.Write(" " + pokeMove.moveId);
                         Console.WriteLine();
-                        //transition.Insert(pokeMove);
+                        transition.Insert(pokeMove);
                     }
                     foreach (AbilityGroup abilityGroup in newPokemon.abilities)
                     {
@@ -167,8 +170,11 @@ namespace ApiCaller
                         pokeAbility.pokeId = newPokemon.id;
                         pokeAbility.abilityId = abilityId;
                         Console.WriteLine("Writing PokeAbility...");
+                        Console.WriteLine(pokeAbility.id);
+                        Console.Write("" + pokeAbility.pokeId);
+                        Console.Write(" " + pokeAbility.abilityId);
                         Console.WriteLine();
-                        //transition.Insert(pokeAbility);
+                        transition.Insert(pokeAbility);
                     }
                 }
             }
