@@ -6,7 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        using DbTransition transition = new DbTransition();
+        using DbTransition transition = new DbTransition(); 
 
         Pokemon pokemon = transition.GetFromDatabase<Pokemon>("SELECT * FROM pokemon WHERE id=1", new QueryOptions() { IncludeRelations = true}).First();
 
