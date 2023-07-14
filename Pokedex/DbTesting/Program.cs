@@ -43,5 +43,7 @@ class Program
         Console.WriteLine(testing2.name);
 
         transition.Delete(poke);
+
+        Console.Read();
     }
 }
