@@ -126,6 +126,7 @@ public class DbTransition : IDisposable
         string query = CommandBuilder.InsertCommand(entity);
 
         Console.WriteLine(query);
+
         MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();
@@ -149,6 +150,8 @@ public class DbTransition : IDisposable
 
         string query = CommandBuilder.UpdateCommand(entity);
 
+        Console.WriteLine(query);
+
         MySqlCommand command = new MySqlCommand(query, DbConnection);
 
         command.ExecuteNonQuery();
@@ -168,8 +171,9 @@ public class DbTransition : IDisposable
 
         string query = CommandBuilder.DeleteCommand(entity);
 
+        Console.WriteLine(query);
         MySqlCommand command = new MySqlCommand(query, DbConnection);
-
+        
         command.ExecuteNonQuery();
     }
 

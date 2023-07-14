@@ -15,7 +15,7 @@ public sealed class PokemonController : ControllerBase {
     } 
 
     [HttpGet]
-    public IActionResult GetOverview([FromQuery] int pageNumber, [FromQuery] int pageSize) {
+    public IActionResult GetOverview([FromQuery] int pageNumber=1, [FromQuery] int pageSize=20) {
         
         using DbTransition transition = new DbTransition();
 

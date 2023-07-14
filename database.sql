@@ -2,6 +2,9 @@
 -- CREATE USER 'poketrainer'@'localhost';
 -- GRANT ALL PRIVILEGES ON pokedex.* TO 'poketrainer'@'localhost' IDENTIFIED BY 'password123';
 
+CREATE USER IF NOT EXISTS 'poketrainer'@'localhost' IDENTIFIED BY 'password123';
+GRANT ALL PRIVILEGES ON pokedex TO 'pokedex'@'localhost' WITH GRANT OPTION;
+
 DROP DATABASE IF EXISTS pokedex;
 CREATE DATABASE pokedex;
 USE pokedex;
